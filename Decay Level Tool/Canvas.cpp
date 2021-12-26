@@ -5,10 +5,18 @@ Canvas::Canvas() {
 	background.setFillColor(BACKGROUND_COLOR);
 	background.setPosition(MARGIN, MARGIN);
 	setGuideLines();
+
+	bound = Bound(MARGIN, MARGIN, WIDTH+MARGIN, HEIGHT+MARGIN);
 }
 
 Canvas::~Canvas() {
 	guideLines.clear();
+}
+
+Vector2f Canvas::getCenterPosition() {
+	float width = (WIDTH / 2) + MARGIN;
+	float height = (HEIGHT / 2) + MARGIN;
+	return Vector2f(width, height);
 }
 
 void Canvas::setGuideLines() {
@@ -33,5 +41,6 @@ void Canvas::setGuideLines() {
 }
 
 RectangleShape Canvas::getBackground() { return background; }
-vector<RectangleShape*> Canvas::getGuideLines() { return guideLines;  }
+vector<RectangleShape*> Canvas::getGuideLines() { return guideLines; }
+Bound Canvas::getBound() { return bound; }
 

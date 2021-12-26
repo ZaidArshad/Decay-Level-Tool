@@ -4,11 +4,6 @@ using namespace sf;
 using namespace std;
 
 class Application {
-private:
-	Canvas* canvas;
-	RectangleShape background;
-
-	void drawCanvas(RenderWindow& window);
 public:
 	int WIDTH = 1400;
 	int HEIGHT = 820;
@@ -17,6 +12,13 @@ public:
 
 	Application();
 	~Application();
-	void drawApplication(RenderWindow& window);
+	Canvas getCanvas();
+	void draw(RenderWindow& window);
+
+private:
+	Canvas* canvas;
+	RectangleShape background;
+
+	void drawCanvas(RenderWindow& window);
 };
 

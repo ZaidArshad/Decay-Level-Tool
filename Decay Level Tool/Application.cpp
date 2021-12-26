@@ -17,7 +17,11 @@ void Application::drawCanvas(RenderWindow& window) {
 	}
 }
 
-void Application::drawApplication(RenderWindow& window) {
+Canvas Application::getCanvas() {
+	return *canvas;
+}
+
+void Application::draw(RenderWindow& window) {
 	window.draw(background);
 	drawCanvas(window);
 }
