@@ -1,21 +1,22 @@
 #include "PlayerStart.h"
 #include <iostream>
 
-PlayerStart::PlayerStart(Canvas canvas) {
+PlayerStart::PlayerStart(Canvas* c) {
 	if (!playerTexture.loadFromFile("images/can.png")) {
 		std::cout << "Load failed\n";
 		system("pause");
 	}
+	canvas = c;
 	width = playerTexture.getSize().x;
 	height = playerTexture.getSize().y;
 	playerSprite.setTexture(playerTexture);
 	playerSprite.setOrigin(width / 2, height / 2);
 
-	Vector2f position = canvas.getCenterPosition();
+	Vector2f position = c->getCenterPosition();
 	xPos = position.x;
 	yPos = position.y;
 	isClicked = false;
-	setCanvasBound(canvas.getBound());
+	canvasBound = c->getBound();
 	setCanBound();
 
 	playerSprite.setPosition(position.x, position.y);
@@ -26,7 +27,8 @@ void PlayerStart::draw(RenderWindow& window) {
 	window.draw(playerSprite);
 }
 
-void PlayerStart::setCanvasBound(Bound b) {
+void PlayerStart::setCanvasBound() {
+	Bound b = canvas->getBound();
 	float top = b.getTop() + playerSprite.getOrigin().y;
 	float left = b.getLeft() + playerSprite.getOrigin().x;
 	float right = b.getRight() - width + playerSprite.getOrigin().x;
@@ -45,20 +47,23 @@ void PlayerStart::setCanBound() {
 
 void PlayerStart::isCanClicked(Vector2i position) {
 	bool pressed = Mouse::isButtonPressed(Mouse::Left);
-	setCanBound();
 	if (pressed) {
 		if (position.x > canBound.getLeft() &&
 			position.x < canBound.getRight() &&
 			position.y > canBound.getTop() &&
 			position.y < canBound.getBot()) {
-			if (!isClicked) playerSprite.setOrigin(
-				position.x - canBound.getLeft(), position.y - canBound.getTop());
+			if (!isClicked) {
+				playerSprite.setOrigin(
+					position.x - canBound.getLeft(), position.y - canBound.getTop());
+			}
 			isClicked = true;
 		}
 	}
 	else {
 		isClicked = false;
 	}
+	setCanvasBound();
+	setCanBound();
 	
 }
 
@@ -74,13 +79,18 @@ void PlayerStart::setPosition(Vector2f position) {
 	float x = position.x;
 	float y = position.y;
 
-	if (x < canvasBound.getLeft()) x = canvasBound.getLeft();
+	float originX = playerSprite.getOrigin().x;
+	float originY = playerSprite.getOrigin().y;
+
+
+	if (x < canvasBound.getLeft()) x = canvasBound.getLeft() ;
 	else if (x > canvasBound.getRight()) x = canvasBound.getRight();
 
 	if (y < canvasBound.getTop()) y = canvasBound.getTop();
 	else if (y > canvasBound.getBot()) y = canvasBound.getBot();
 
+
 	xPos = x;
 	yPos = y;
-	playerSprite.setPosition(xPos, yPos);
+	playerSprite.setPosition(x, y);
 }

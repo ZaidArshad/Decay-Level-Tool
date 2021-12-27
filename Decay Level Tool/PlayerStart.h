@@ -8,10 +8,11 @@ using namespace std;
 
 class PlayerStart {
 public:
-	PlayerStart(Canvas canvas);
+	PlayerStart(Canvas* c);
 	void draw(RenderWindow& window);
 
 private:
+	Canvas* canvas;
 	Texture playerTexture;
 	Sprite playerSprite;
 	float xPos;
@@ -22,7 +23,7 @@ private:
 	Bound canvasBound;
 	Bound canBound;
 
-	void setCanvasBound(Bound b);
+	void setCanvasBound();
 	void setCanBound();
 	void isCanClicked(Vector2i position);
 	void draggable(RenderWindow& window);

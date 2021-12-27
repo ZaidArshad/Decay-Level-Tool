@@ -12,7 +12,7 @@ public:
 
 	Application();
 	~Application();
-	Canvas getCanvas();
+	Canvas* getCanvas();
 	void draw(RenderWindow& window);
 
 private:

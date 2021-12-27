@@ -17,8 +17,8 @@ void Application::drawCanvas(RenderWindow& window) {
 	}
 }
 
-Canvas Application::getCanvas() {
-	return *canvas;
+Canvas* Application::getCanvas() {
+	return canvas;
 }
 
 void Application::draw(RenderWindow& window) {
