@@ -1,46 +1,24 @@
 #include "Canvas.h"
 
-Canvas::Canvas() {
-	background.setSize(Vector2f(WIDTH, HEIGHT));
-	background.setFillColor(BACKGROUND_COLOR);
-	background.setPosition(MARGIN, MARGIN);
-	setGuideLines();
+Canvas::Canvas(int w, int h, float x, float y, Color bg) {
+	width = w;
+	height = h;
+	xPos = x;
+	yPos = y;
+	backgroundColor = bg;
 
-	bound = Bound(MARGIN, MARGIN, WIDTH+MARGIN, HEIGHT+MARGIN);
-}
-
-Canvas::~Canvas() {
-	guideLines.clear();
+	background.setSize(Vector2f(width, height));
+	background.setFillColor(backgroundColor);
+	background.setPosition(xPos, yPos);
+	bound = Bound(xPos, yPos, width+xPos, height+yPos);
 }
 
 Vector2f Canvas::getCenterPosition() {
-	float width = (WIDTH / 2) + MARGIN;
-	float height = (HEIGHT / 2) + MARGIN;
-	return Vector2f(width, height);
-}
-
-void Canvas::setGuideLines() {
-	int rows = HEIGHT / 10;
-	int cols = WIDTH / 10;
-
-	RectangleShape* guideLine;
-	for (int i = 0; i <= rows; i++) {
-		guideLine = new RectangleShape();
-		guideLine->setFillColor(GUIDELINE_COLOR);
-		guideLine->setSize(Vector2f(WIDTH, GUIDELINE_WIDTH));
-		guideLine->setPosition(10, i * 10 + 10);
-		guideLines.push_back(guideLine);
-	}
-	for (int i = 0; i <= cols; i++) {
-		guideLine = new RectangleShape();
-		guideLine->setFillColor(GUIDELINE_COLOR);
-		guideLine->setSize(Vector2f(GUIDELINE_WIDTH, HEIGHT));
-		guideLine->setPosition(i * 10 + 10, 10);
-		guideLines.push_back(guideLine);
-	}
+	float x = (width / 2) + xPos;
+	float y = (height / 2) + yPos;
+	return Vector2f(x, y);
 }
 
 RectangleShape Canvas::getBackground() { return background; }
-vector<RectangleShape*> Canvas::getGuideLines() { return guideLines; }
 Bound Canvas::getBound() { return bound; }
 

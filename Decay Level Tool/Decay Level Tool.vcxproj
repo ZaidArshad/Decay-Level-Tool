@@ -156,12 +156,14 @@
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PlayerStart.cpp" />
+    <ClCompile Include="Prompt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Bound.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="PlayerStart.h" />
+    <ClInclude Include="Prompt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

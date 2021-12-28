@@ -1,6 +1,7 @@
 #include"SFML\Graphics.hpp"
 #include "Application.h"
 #include "PlayerStart.h"
+#include "Prompt.h"
 
 using namespace sf;
 
@@ -29,5 +30,6 @@ int main() {
 		window.display();
 	}
 
+	delete application;
 	return 0;
 }
