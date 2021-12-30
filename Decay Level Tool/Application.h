@@ -1,5 +1,6 @@
 #pragma once
 #include "Canvas.h"
+#include "Draggable.h"
 
 using namespace sf;
 using namespace std;
@@ -21,7 +22,7 @@ public:
 	Application();
 	~Application();
 	Canvas* getCanvas();
-	void draw(RenderWindow& window);
+	void draw(RenderWindow& window, vector<Draggable*> draggables);
 
 private:
 	Canvas* levelArea;

@@ -3,6 +3,8 @@
 #include <vector>
 #include "Bound.h"
 
+class Draggable;
+
 using namespace sf;
 using namespace std;
 
@@ -18,9 +20,12 @@ public:
 	Vector2f getCenterPosition();
 	RectangleShape getBackground();
 	Bound getBound();
+	Draggable* getClickedDraggable();
+	void setClickedDraggable(Draggable* draggable);
 
 private:
 	RectangleShape background;
 	Bound bound;
+	Draggable* clickedDraggable;
 };
 

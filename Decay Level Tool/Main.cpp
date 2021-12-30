@@ -10,8 +10,13 @@ int main() {
 	Application* application = new Application();
 	RenderWindow window(VideoMode(application->WIDTH, application->HEIGHT),
 		"DECAY Level Tool", sf::Style::Titlebar | sf::Style::Close);
-	PlayerStart playerStart(application->getCanvas());
 	Platform platform(application->getCanvas(), 0);
+	PlayerStart playerStart(application->getCanvas());
+
+	vector<Draggable*> draggables;
+	draggables.push_back(&platform);
+	draggables.push_back(&playerStart);
+	
 
 	Event event;
 	window.setFramerateLimit(60);
@@ -27,9 +32,7 @@ int main() {
 		}
 
 		window.clear();
-		application->draw(window);
-		playerStart.draw(window);
-		platform.draw(window);
+		application->draw(window, draggables);
 		window.display();
 	}
 

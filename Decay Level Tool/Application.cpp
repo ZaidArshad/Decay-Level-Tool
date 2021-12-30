@@ -47,7 +47,12 @@ Canvas* Application::getCanvas() {
 	return levelArea;
 }
 
-void Application::draw(RenderWindow& window) {
+void Application::draw(RenderWindow& window, vector<Draggable*> draggables) {
 	window.draw(background);
 	drawLevelArea(window);
+
+	for (int i = 0; i < draggables.size(); i++) {
+		draggables[i]->draggable(window);
+		draggables[draggables.size()-i-1]->draw(window);
+	}
 }

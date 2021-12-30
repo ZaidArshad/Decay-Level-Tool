@@ -27,22 +27,31 @@ void Draggable::setClickableBound() {
 
 void Draggable::isDrawableClicked(Vector2i position) {
 	bool pressed = Mouse::isButtonPressed(Mouse::Left);
+	Draggable* clickedDraggable = canvas->getClickedDraggable();
+
 	if (pressed) {
 		if (position.x > clickableBound.getLeft() &&
 			position.x < clickableBound.getRight() &&
 			position.y > clickableBound.getTop() &&
 			position.y < clickableBound.getBot()) {
-			if (!isClicked) {
-				transformable->setOrigin(
-					position.x - clickableBound.getLeft(),
-					position.y - clickableBound.getTop());
+
+			if (clickedDraggable == nullptr) {
+				if (!isClicked) {
+					transformable->setOrigin(
+						position.x - clickableBound.getLeft(),
+						position.y - clickableBound.getTop());
+				}
+				clickedDraggable = this;
+				isClicked = true;
 			}
-			isClicked = true;
 		}
 	}
 	else {
+		if (clickedDraggable == this) clickedDraggable = nullptr;
 		isClicked = false;
 	}
+
+	canvas->setClickedDraggable(clickedDraggable);
 	setCanvasBound();
 	setClickableBound();
 
