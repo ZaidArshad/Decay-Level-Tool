@@ -154,7 +154,9 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Bound.cpp" />
     <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="Draggable.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayerStart.cpp" />
     <ClCompile Include="Prompt.cpp" />
   </ItemGroup>
@@ -162,6 +164,8 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Bound.h" />
     <ClInclude Include="Canvas.h" />
+    <ClInclude Include="Draggable.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayerStart.h" />
     <ClInclude Include="Prompt.h" />
   </ItemGroup>

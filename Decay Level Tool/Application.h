@@ -27,6 +27,7 @@ private:
 	Canvas* levelArea;
 	vector<RectangleShape*> guideLines;
 
+
 	RectangleShape background;
 
 	void setGuideLines();

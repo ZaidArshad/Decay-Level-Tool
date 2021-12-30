@@ -1,6 +1,7 @@
 #include"SFML\Graphics.hpp"
 #include "Application.h"
 #include "PlayerStart.h"
+#include "Platform.h"
 #include "Prompt.h"
 
 using namespace sf;
@@ -10,6 +11,7 @@ int main() {
 	RenderWindow window(VideoMode(application->WIDTH, application->HEIGHT),
 		"DECAY Level Tool", sf::Style::Titlebar | sf::Style::Close);
 	PlayerStart playerStart(application->getCanvas());
+	Platform platform(application->getCanvas(), 0);
 
 	Event event;
 	window.setFramerateLimit(60);
@@ -27,6 +29,7 @@ int main() {
 		window.clear();
 		application->draw(window);
 		playerStart.draw(window);
+		platform.draw(window);
 		window.display();
 	}
 
