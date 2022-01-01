@@ -10,8 +10,8 @@ int main() {
 	Application* application = new Application();
 	RenderWindow window(VideoMode(application->WIDTH, application->HEIGHT),
 		"DECAY Level Tool", sf::Style::Titlebar | sf::Style::Close);
-	Platform platform(application->getCanvas(), 0);
-	PlayerStart playerStart(application->getCanvas());
+	Platform platform(application->getLevelArea(), 0);
+	PlayerStart playerStart(application->getLevelArea());
 
 	vector<Draggable*> draggables;
 	draggables.push_back(&platform);
@@ -21,6 +21,8 @@ int main() {
 	Event event;
 	window.setFramerateLimit(60);
 
+	bool space = false;
+
 	while (window.isOpen()) {
 
 		while (window.pollEvent(event)) {
@@ -29,6 +31,17 @@ int main() {
 
 				window.close();
 			}
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Space)) {
+			if (!space) {
+				space = true;
+				Platform* platform2 = new Platform(application->getLevelArea(), 4);
+				draggables.push_back(platform2);
+			}
+		}
+		else {
+			space = false;
 		}
 
 		window.clear();

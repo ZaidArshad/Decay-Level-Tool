@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "Canvas.h"
 #include "Draggable.h"
 
@@ -19,19 +20,29 @@ public:
 	Color LEVEL_BACKGROUND_COLOR = Color(0, 0, 0);
 	Color LEVEL_GUIDELINE_COLOR = Color(255, 255, 255, 100);
 
+	int SIDE_WIDTH = WIDTH - LEVEL_WIDTH - (3*LEVEL_MARGIN);
+	Color SIDE_BACKGROUND_COLOR = Color(150, 150, 150);
+
+	int BUTTONS_HEIGHT = 100;
+	int BUTTON_SIZE = 100;
+
 	Application();
 	~Application();
-	Canvas* getCanvas();
+	Canvas* getLevelArea();
+
 	void draw(RenderWindow& window, vector<Draggable*> draggables);
 
 private:
+	RectangleShape background;
+
 	Canvas* levelArea;
 	vector<RectangleShape*> guideLines;
 
-
-	RectangleShape background;
+	Canvas* buttonsArea;
 
 	void setGuideLines();
 	void drawLevelArea(RenderWindow& window);
+
+	void drawButtonsArea(RenderWindow& window);
 };
 

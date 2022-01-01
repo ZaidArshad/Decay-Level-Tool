@@ -1,7 +1,7 @@
 #pragma once
 class Bound {
 public:
-	Bound(float x, float y, float width, float height);
+	Bound(float t, float l, float r, float b);
 	Bound();
 	float getTop();
 	float getLeft();

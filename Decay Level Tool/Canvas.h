@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Bound.h"
+#include <iostream>
+
+using namespace std;
 
 class Draggable;
 

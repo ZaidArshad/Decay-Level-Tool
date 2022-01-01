@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Button.h"
 
 Application::Application() {
 	background.setSize(Vector2f(WIDTH, HEIGHT));
@@ -7,12 +8,33 @@ Application::Application() {
 		LEVEL_WIDTH, LEVEL_HEIGHT,
 		LEVEL_MARGIN, LEVEL_MARGIN,
 		LEVEL_BACKGROUND_COLOR);
+
+	buttonsArea = new Canvas(
+		SIDE_WIDTH, BUTTONS_HEIGHT,
+		LEVEL_WIDTH+(2*LEVEL_MARGIN), LEVEL_MARGIN,
+		SIDE_BACKGROUND_COLOR);
+
 	setGuideLines();
 }
 
 Application::~Application() {
 	for (RectangleShape* line : guideLines) delete line;
 	delete levelArea;
+}
+
+Canvas* Application::getLevelArea() {
+	return levelArea;
+}
+
+void Application::draw(RenderWindow& window, vector<Draggable*> draggables) {
+	window.draw(background);
+	drawLevelArea(window);
+	drawButtonsArea(window);
+
+	for (int i = 0; i < draggables.size(); i++) {
+		draggables[i]->draggable(window);
+		draggables[draggables.size() - i - 1]->draw(window);
+	}
 }
 
 void Application::setGuideLines() {
@@ -43,16 +65,12 @@ void Application::drawLevelArea(RenderWindow& window) {
 	}
 }
 
-Canvas* Application::getCanvas() {
-	return levelArea;
-}
-
-void Application::draw(RenderWindow& window, vector<Draggable*> draggables) {
-	window.draw(background);
-	drawLevelArea(window);
-
-	for (int i = 0; i < draggables.size(); i++) {
-		draggables[i]->draggable(window);
-		draggables[draggables.size()-i-1]->draw(window);
-	}
+void Application::drawButtonsArea(RenderWindow& window) {
+	window.draw(buttonsArea->getBackground());
+	Button button(
+		buttonsArea->getBound().getLeft()+BUTTON_SIZE/2, buttonsArea->getCenterPosition().y,
+		"can.png");
+	button.mouseInteract(window);
+	button.draw(window);
+	//cout << buttonsArea->getBound().getLeft() << " " << buttonsArea->yPos << endl;
 }

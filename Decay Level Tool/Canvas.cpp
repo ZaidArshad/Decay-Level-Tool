@@ -10,7 +10,7 @@ Canvas::Canvas(int w, int h, float x, float y, Color bg) {
 	background.setSize(Vector2f(width, height));
 	background.setFillColor(backgroundColor);
 	background.setPosition(xPos, yPos);
-	bound = Bound(xPos, yPos, width+xPos, height+yPos);
+	bound = Bound(yPos, xPos, width+xPos, height+yPos);
 }
 
 Vector2f Canvas::getCenterPosition() {

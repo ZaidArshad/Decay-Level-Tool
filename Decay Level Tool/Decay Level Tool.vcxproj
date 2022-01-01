@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Bound.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Draggable.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Bound.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="Draggable.h" />
     <ClInclude Include="Platform.h" />
