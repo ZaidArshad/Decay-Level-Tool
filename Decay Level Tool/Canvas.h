@@ -23,12 +23,16 @@ public:
 	Vector2f getCenterPosition();
 	RectangleShape getBackground();
 	Bound getBound();
+
 	Draggable* getClickedDraggable();
 	void setClickedDraggable(Draggable* draggable);
+	Draggable* getLastClicked();
+	void setLastClicked(Draggable* draggable);
 
 private:
 	RectangleShape background;
 	Bound bound;
 	Draggable* clickedDraggable;
+	Draggable* lastClicked;
 };
 

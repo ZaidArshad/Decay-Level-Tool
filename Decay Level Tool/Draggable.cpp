@@ -3,7 +3,6 @@
 #include <iostream>
 
 void Draggable::draw(RenderWindow& window) {
-	draggable(window);
 	window.draw(*drawable);
 }
 
@@ -28,6 +27,7 @@ void Draggable::setClickableBound() {
 void Draggable::isDrawableClicked(Vector2i position) {
 	bool pressed = Mouse::isButtonPressed(Mouse::Left);
 	Draggable* clickedDraggable = canvas->getClickedDraggable();
+	setClickableBound();
 
 	if (pressed) {
 		if (position.x > clickableBound.getLeft() &&
@@ -36,13 +36,23 @@ void Draggable::isDrawableClicked(Vector2i position) {
 			position.y < clickableBound.getBot()) {
 
 			if (clickedDraggable == nullptr) {
+
+				// First click
 				if (!isClicked) {
 					transformable->setOrigin(
 						position.x - clickableBound.getLeft(),
 						position.y - clickableBound.getTop());
 				}
 				clickedDraggable = this;
+				canvas->setLastClicked(this);
 				isClicked = true;
+			}
+		}
+
+		// If something other than current draggable clicked
+		else {
+			if (canvas->getLastClicked() == this && !isClicked) {
+				canvas->setLastClicked(nullptr);
 			}
 		}
 	}
@@ -50,10 +60,8 @@ void Draggable::isDrawableClicked(Vector2i position) {
 		if (clickedDraggable == this) clickedDraggable = nullptr;
 		isClicked = false;
 	}
-
-	canvas->setClickedDraggable(clickedDraggable);
 	setCanvasBound();
-	setClickableBound();
+	canvas->setClickedDraggable(clickedDraggable);
 
 }
 

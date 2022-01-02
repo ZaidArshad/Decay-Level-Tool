@@ -13,9 +13,8 @@ int main() {
 	Platform platform(application->getLevelArea(), 0);
 	PlayerStart playerStart(application->getLevelArea());
 
-	vector<Draggable*> draggables;
-	draggables.push_back(&platform);
-	draggables.push_back(&playerStart);
+	vector<Platform*> platforms;
+	platforms.push_back(&platform);
 	
 
 	Event event;
@@ -37,7 +36,7 @@ int main() {
 			if (!space) {
 				space = true;
 				Platform* platform2 = new Platform(application->getLevelArea(), 4);
-				draggables.push_back(platform2);
+				platforms.push_back(platform2);
 			}
 		}
 		else {
@@ -45,7 +44,9 @@ int main() {
 		}
 
 		window.clear();
-		application->draw(window, draggables);
+		playerStart.draggable(window);
+		application->draw(window, platforms);
+		playerStart.draw(window);
 		window.display();
 	}
 

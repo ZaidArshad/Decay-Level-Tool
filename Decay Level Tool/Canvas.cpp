@@ -24,3 +24,6 @@ Bound Canvas::getBound() { return bound; }
 
 void Canvas::setClickedDraggable(Draggable* draggable) { clickedDraggable = draggable; }
 Draggable* Canvas::getClickedDraggable() { return clickedDraggable; }
+
+void Canvas::setLastClicked(Draggable* draggable) { lastClicked = draggable; }
+Draggable* Canvas::getLastClicked() { return lastClicked; }

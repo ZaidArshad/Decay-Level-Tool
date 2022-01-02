@@ -1,7 +1,9 @@
 #pragma once
 #include <iostream>
+#include "Button.h"
 #include "Canvas.h"
 #include "Draggable.h"
+#include "Platform.h"
 
 using namespace sf;
 using namespace std;
@@ -30,7 +32,7 @@ public:
 	~Application();
 	Canvas* getLevelArea();
 
-	void draw(RenderWindow& window, vector<Draggable*> draggables);
+	void draw(RenderWindow& window, vector<Platform*> platforms);
 
 private:
 	RectangleShape background;
@@ -39,6 +41,7 @@ private:
 	vector<RectangleShape*> guideLines;
 
 	Canvas* buttonsArea;
+	Button* button;
 
 	void setGuideLines();
 	void drawLevelArea(RenderWindow& window);
