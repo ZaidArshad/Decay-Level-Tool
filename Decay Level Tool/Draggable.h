@@ -12,6 +12,7 @@ public:
 	void draggable(RenderWindow& window);
 
 protected:
+	Draggable* self;
 	Canvas* canvas;
 	Drawable* drawable;
 	Transformable* transformable;

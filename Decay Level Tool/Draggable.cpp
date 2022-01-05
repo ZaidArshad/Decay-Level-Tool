@@ -43,21 +43,21 @@ void Draggable::isDrawableClicked(Vector2i position) {
 						position.x - clickableBound.getLeft(),
 						position.y - clickableBound.getTop());
 				}
-				clickedDraggable = this;
-				canvas->setLastClicked(this);
+				clickedDraggable = self;
+				canvas->setLastClicked(self);
 				isClicked = true;
 			}
 		}
 
 		// If something other than current draggable clicked
 		else {
-			if (canvas->getLastClicked() == this && !isClicked) {
+			if (canvas->getLastClicked() == self && clickedDraggable != self) {
 				canvas->setLastClicked(nullptr);
 			}
 		}
 	}
 	else {
-		if (clickedDraggable == this) clickedDraggable = nullptr;
+		if (clickedDraggable == self) clickedDraggable = nullptr;
 		isClicked = false;
 	}
 	setCanvasBound();

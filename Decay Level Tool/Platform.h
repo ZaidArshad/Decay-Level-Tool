@@ -4,15 +4,26 @@
 #include "Canvas.h"
 #include "Draggable.h"
 
+class Resizer;
+
 class Platform : public Draggable {
 public:
 	Platform(Canvas* c, int h);
+	~Platform();
 	virtual void draw(RenderWindow& window);
+	void setWidth(int w);
+	void setHeight(int h);
+	float getX();
+	float getY();
 
 private:
 	RectangleShape rectangleShape;
 	int health;
-	Color healthIndex[8] = {
+
+	bool isShowingResizers = false;
+	vector<Resizer*> resizers;
+
+	Color HEALTH_INDEX[8] = {
 		Color::White,
 		Color::Red,
 		Color(255, 128, 0),
@@ -23,5 +34,7 @@ private:
 		Color(148,0,211) };
 
 	void setClicked(RenderWindow& window);
+	void generateResizers();
+	void updateResizers();
 };
 

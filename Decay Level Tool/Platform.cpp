@@ -1,14 +1,16 @@
 #include "Platform.h"
+#include "Resizer.h"
 #include <iostream>
 
 Platform::Platform(Canvas* c, int h) {
+	self = this;
 	canvas = c;
 	health = h;
 	width = 100;
 	height = 20;
 	rectangleShape.setSize(Vector2f(width, height));
 	rectangleShape.setOrigin(width / 2, height / 2);
-	rectangleShape.setFillColor(healthIndex[health]);
+	rectangleShape.setFillColor(HEALTH_INDEX[health]);
 
 	drawable = &rectangleShape;
 	transformable = &rectangleShape;
@@ -20,35 +22,89 @@ Platform::Platform(Canvas* c, int h) {
 	canvasBound = c->getBound();
 	setClickableBound();
 
-	rectangleShape.setPosition(position.x, position.y);
+	rectangleShape.setPosition(xPos, yPos);
+	generateResizers();
+}
+
+Platform::~Platform() {
+	resizers.clear();
 }
 
 void Platform::draw(RenderWindow& window) {
 	draggable(window);
+
+	if (isShowingResizers) {
+		updateResizers();
+		for (Resizer* resizer : resizers) {
+			resizer->draggable(window);
+			resizer->draw(window);
+		}
+	}
+
 	if (canvas->getLastClicked() == this) {
 		setClicked(window);
 	}
+	else {
+		isShowingResizers = false;
+	}
+
 	window.draw(*drawable);
 }
 
+void Platform::setWidth(int w) {
+	width = w;
+	rectangleShape.setSize(Vector2f(width, height));
+}
+
+void Platform::setHeight(int h) {
+	height = h;
+	rectangleShape.setSize(Vector2f(width, height));
+}
+
+float Platform::getX() { return xPos; }
+float Platform::getY() { return yPos; }
+
 void Platform::setClicked(RenderWindow& window) {
-	RectangleShape tl = RectangleShape(Vector2f(5, 5));
-	tl.setPosition(clickableBound.getLeft() - 5, clickableBound.getTop() - 5);
-	tl.setFillColor(Color(255, 0, 0));
-	window.draw(tl);
+	if (!isShowingResizers) {
+		isShowingResizers = true;
+	}
+}
 
-	RectangleShape tr = RectangleShape(Vector2f(5, 5));
-	tr.setPosition(clickableBound.getRight(), clickableBound.getTop() - 5);
-	tr.setFillColor(Color(255, 0, 0));
-	window.draw(tr);
+void Platform::updateResizers() {
+	float offset = Resizer::SIZE / 2;
 
-	RectangleShape bl = RectangleShape(Vector2f(5, 5));
-	bl.setPosition(clickableBound.getLeft() - 5, clickableBound.getBot());
-	bl.setFillColor(Color(255, 0, 0));
-	window.draw(bl);
+	Resizer* tl = resizers[0];
 
-	RectangleShape br = RectangleShape(Vector2f(5, 5));
-	br.setPosition(clickableBound.getRight(), clickableBound.getBot());
-	br.setFillColor(Color(255, 0, 0));
-	window.draw(br);
+	tl->setPos(
+		clickableBound.getLeft() - offset, clickableBound.getTop() - offset);
+
+	Resizer* tr = resizers[1];
+	tr->setPos(
+		clickableBound.getRight() + offset, clickableBound.getTop() - offset);
+
+	Resizer* bl = resizers[2];
+	bl->setPos(
+		clickableBound.getLeft() - offset, clickableBound.getBot() + offset);
+
+	Resizer* br = resizers[3];
+	br->setPos(
+		clickableBound.getRight() + offset, clickableBound.getBot() + offset);
+}
+
+void Platform::generateResizers() {
+	float offset = Resizer::SIZE / 2;
+
+	Resizer* tl = new Resizer(canvas, this,
+		clickableBound.getLeft() - offset, clickableBound.getTop() - offset);
+	Resizer* tr = new Resizer(canvas, this,
+		clickableBound.getRight() + offset, clickableBound.getTop() - offset);
+	Resizer* bl = new Resizer(canvas, this,
+		clickableBound.getLeft() - offset, clickableBound.getBot() + offset);
+	Resizer* br = new Resizer(canvas, this,
+		clickableBound.getRight() + offset, clickableBound.getBot() + offset);
+
+	resizers.push_back(tl);
+	resizers.push_back(tr);
+	resizers.push_back(bl);
+	resizers.push_back(br);
 }

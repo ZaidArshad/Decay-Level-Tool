@@ -160,6 +160,7 @@
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayerStart.cpp" />
     <ClCompile Include="Prompt.cpp" />
+    <ClCompile Include="Resizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayerStart.h" />
     <ClInclude Include="Prompt.h" />
+    <ClInclude Include="Resizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

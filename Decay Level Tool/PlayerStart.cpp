@@ -6,6 +6,7 @@ PlayerStart::PlayerStart(Canvas* c) {
 		std::cout << "Load failed\n";
 		system("pause");
 	}
+	self = this;
 	canvas = c;
 	width = playerTexture.getSize().x;
 	height = playerTexture.getSize().y;

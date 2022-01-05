@@ -6,6 +6,7 @@ Canvas::Canvas(int w, int h, float x, float y, Color bg) {
 	xPos = x;
 	yPos = y;
 	backgroundColor = bg;
+	clickedDraggable = nullptr;
 
 	background.setSize(Vector2f(width, height));
 	background.setFillColor(backgroundColor);
@@ -25,5 +26,7 @@ Bound Canvas::getBound() { return bound; }
 void Canvas::setClickedDraggable(Draggable* draggable) { clickedDraggable = draggable; }
 Draggable* Canvas::getClickedDraggable() { return clickedDraggable; }
 
-void Canvas::setLastClicked(Draggable* draggable) { lastClicked = draggable; }
+void Canvas::setLastClicked(Draggable* draggable) { 
+	cout << draggable << endl;
+	lastClicked = draggable; }
 Draggable* Canvas::getLastClicked() { return lastClicked; }
