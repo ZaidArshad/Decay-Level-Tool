@@ -14,6 +14,8 @@ public:
 
 	Resizer(Canvas* c, Platform* p, float x, float y);
 	void setPos(float x, float y);
+	void resize(RenderWindow& window);
+	bool getClicked();
 
 private:
 	Platform* parent;

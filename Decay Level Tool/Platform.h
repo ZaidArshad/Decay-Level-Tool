@@ -11,10 +11,15 @@ public:
 	Platform(Canvas* c, int h);
 	~Platform();
 	virtual void draw(RenderWindow& window);
+
 	void setWidth(int w);
 	void setHeight(int h);
+	int getWidth();
+	int getHeight();
 	float getX();
 	float getY();
+	void setOrigin(Vector2f origin);
+	Vector2f getOrigin();
 
 private:
 	RectangleShape rectangleShape;
@@ -35,6 +40,6 @@ private:
 
 	void setClicked(RenderWindow& window);
 	void generateResizers();
-	void updateResizers();
+	void updateResizers(RenderWindow& window);
 };
 

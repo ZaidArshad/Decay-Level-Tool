@@ -34,7 +34,7 @@ void Platform::draw(RenderWindow& window) {
 	draggable(window);
 
 	if (isShowingResizers) {
-		updateResizers();
+		updateResizers(window);
 		for (Resizer* resizer : resizers) {
 			resizer->draggable(window);
 			resizer->draw(window);
@@ -61,8 +61,16 @@ void Platform::setHeight(int h) {
 	rectangleShape.setSize(Vector2f(width, height));
 }
 
+int Platform::getWidth() { return width; }
+int Platform::getHeight() { return height; }
+
 float Platform::getX() { return xPos; }
 float Platform::getY() { return yPos; }
+
+void Platform::setOrigin(Vector2f origin) {
+	rectangleShape.setOrigin(origin);
+}
+Vector2f Platform::getOrigin() { return rectangleShape.getOrigin(); }
 
 void Platform::setClicked(RenderWindow& window) {
 	if (!isShowingResizers) {
@@ -70,25 +78,41 @@ void Platform::setClicked(RenderWindow& window) {
 	}
 }
 
-void Platform::updateResizers() {
-	float offset = Resizer::SIZE / 2;
+void Platform::updateResizers(RenderWindow& window) {
+	int size = Resizer::SIZE;
 
 	Resizer* tl = resizers[0];
-
-	tl->setPos(
-		clickableBound.getLeft() - offset, clickableBound.getTop() - offset);
+	if (!tl->getClicked()) {
+		tl->setPos(
+			clickableBound.getLeft(), clickableBound.getTop());
+	}
+	else {
+		tl->resize(window);
+	}
 
 	Resizer* tr = resizers[1];
-	tr->setPos(
-		clickableBound.getRight() + offset, clickableBound.getTop() - offset);
+	if (!tr->getClicked()) {
+		tr->setPos(clickableBound.getRight()+size, clickableBound.getTop());
+	}
+	else {
+		tr->resize(window);
+	}
 
 	Resizer* bl = resizers[2];
-	bl->setPos(
-		clickableBound.getLeft() - offset, clickableBound.getBot() + offset);
+	if (!bl->getClicked()) {
+		bl->setPos(clickableBound.getLeft(), clickableBound.getBot()+size);
+	}
+	else {
+		bl->resize(window);
+	}
 
 	Resizer* br = resizers[3];
-	br->setPos(
-		clickableBound.getRight() + offset, clickableBound.getBot() + offset);
+	if (!br->getClicked()) {
+		br->setPos(clickableBound.getRight()+size, clickableBound.getBot()+size);
+	}
+	else {
+		br->resize(window);
+	}
 }
 
 void Platform::generateResizers() {

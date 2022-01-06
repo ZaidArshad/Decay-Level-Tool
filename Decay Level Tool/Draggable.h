@@ -10,6 +10,7 @@ class Draggable {
 public:
 	void draw(RenderWindow& window);
 	void draggable(RenderWindow& window);
+	void setPosition(Vector2f position);
 
 protected:
 	Draggable* self;
@@ -27,6 +28,5 @@ protected:
 	void setCanvasBound();
 	void setClickableBound();
 	void isDrawableClicked(Vector2i position);
-	void setPosition(Vector2f position);
 };
 
