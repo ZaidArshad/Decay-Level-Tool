@@ -64,8 +64,8 @@ void Platform::setHeight(int h) {
 int Platform::getWidth() { return width; }
 int Platform::getHeight() { return height; }
 
-float Platform::getX() { return xPos; }
-float Platform::getY() { return yPos; }
+float Platform::getX() { return rectangleShape.getPosition().x; }
+float Platform::getY() { return rectangleShape.getPosition().y; }
 
 void Platform::setOrigin(Vector2f origin) {
 	rectangleShape.setOrigin(origin);
@@ -118,13 +118,13 @@ void Platform::updateResizers(RenderWindow& window) {
 void Platform::generateResizers() {
 	float offset = Resizer::SIZE / 2;
 
-	Resizer* tl = new Resizer(canvas, this,
+	Resizer* tl = new Resizer(canvas, this, Resizer::TOP_LEFT,
 		clickableBound.getLeft() - offset, clickableBound.getTop() - offset);
-	Resizer* tr = new Resizer(canvas, this,
+	Resizer* tr = new Resizer(canvas, this, Resizer::TOP_RIGHT,
 		clickableBound.getRight() + offset, clickableBound.getTop() - offset);
-	Resizer* bl = new Resizer(canvas, this,
+	Resizer* bl = new Resizer(canvas, this, Resizer::BOT_LEFT,
 		clickableBound.getLeft() - offset, clickableBound.getBot() + offset);
-	Resizer* br = new Resizer(canvas, this,
+	Resizer* br = new Resizer(canvas, this, Resizer::BOT_RIGHT,
 		clickableBound.getRight() + offset, clickableBound.getBot() + offset);
 
 	resizers.push_back(tl);

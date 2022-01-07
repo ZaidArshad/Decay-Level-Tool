@@ -11,15 +11,21 @@ using namespace std;
 class Resizer : public Draggable {
 public:
 	static const int SIZE = 5;
+	static const int TOP_LEFT = 0;
+	static const int TOP_RIGHT = 1;
+	static const int BOT_LEFT = 2;
+	static const int BOT_RIGHT = 3;
 
-	Resizer(Canvas* c, Platform* p, float x, float y);
+	Resizer(Canvas* c, Platform* p, int t, float x, float y);
 	void setPos(float x, float y);
 	void resize(RenderWindow& window);
 	bool getClicked();
 
 private:
+	int type;
 	Platform* parent;
 	RectangleShape rectangleShape;
+	bool isHeld = false;
 	Color COLOR = Color(255, 0, 0);
 };
 

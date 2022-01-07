@@ -1,7 +1,8 @@
 #include "Resizer.h"
 
 
-Resizer::Resizer(Canvas* c, Platform* p, float x, float y) {
+Resizer::Resizer(Canvas* c, Platform* p, int t, float x, float y) {
+	type = t;
 	self = p;
 	parent = p;
 	canvas = c;
@@ -25,6 +26,7 @@ Resizer::Resizer(Canvas* c, Platform* p, float x, float y) {
 
 void Resizer::setPos(float x, float y) {
 	Vector2f offset = rectangleShape.getOrigin();
+	isHeld = false;
 	x = x - (SIZE - offset.x);
 	y = y - (SIZE - offset.y);
 	setPosition(Vector2f(x, y));
@@ -43,13 +45,23 @@ void Resizer::resize(RenderWindow &window) {
 
 	Vector2f offset = rectangleShape.getOrigin();
 
-	parent->setOrigin(Vector2f(0, 0));
-
 	// Left 
 	//platW = platW + (platX - mouseX - offset);
-	cout << platW << endl;
-	platX = mouseX + (SIZE - offset.x);
-	platY = mouseY + (SIZE - offset.y);
+	if (type == TOP_LEFT) {
+		parent->setOrigin(Vector2f(0, 0));
+		if (isHeld) {
+			platW = platW + (platX - (mouseX + SIZE - offset.x));
+			platH = platH + (platY - (mouseY + SIZE - offset.y));
+		}
+		platX = mouseX + (SIZE - offset.x);
+		platY = mouseY + (SIZE - offset.y);
+		isHeld = true;
+	}
+	else if (type == TOP_RIGHT) {
+		// platW = (mouseX - offset.x) - platX;
+		// platX = mouseX - (offset.x);
+		// platY = mouseY + (SIZE - offset.y);
+	}
 
 
 	//cout << "X: " << mouseX << endl;
