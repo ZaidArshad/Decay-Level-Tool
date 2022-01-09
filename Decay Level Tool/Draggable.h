@@ -11,6 +11,8 @@ public:
 	void draw(RenderWindow& window);
 	void draggable(RenderWindow& window);
 	void setPosition(Vector2f position);
+	Canvas* getCanvas();
+	Bound getClickableBound();
 
 protected:
 	Draggable* self;

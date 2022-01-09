@@ -52,11 +52,25 @@ void Platform::draw(RenderWindow& window) {
 }
 
 void Platform::setWidth(int w) {
+	float x = xPos - rectangleShape.getOrigin().x;
+	if (x + w > canvas->getBound().getRight()) {
+		w = canvas->getBound().getRight() - x;
+	}
+	else if (w < MIN_WIDTH) {
+		w = MIN_WIDTH;
+	}
 	width = w;
 	rectangleShape.setSize(Vector2f(width, height));
 }
 
 void Platform::setHeight(int h) {
+	float y = yPos - rectangleShape.getOrigin().y;
+	if (y + h > canvas->getBound().getBot()) {
+		h = canvas->getBound().getBot() - y;
+	}
+	else if (h < MIN_HEIGHT) {
+		h = MIN_HEIGHT;
+	}
 	height = h;
 	rectangleShape.setSize(Vector2f(width, height));
 }

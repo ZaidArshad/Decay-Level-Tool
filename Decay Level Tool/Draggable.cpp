@@ -77,18 +77,16 @@ void Draggable::setPosition(Vector2f position) {
 	float x = position.x;
 	float y = position.y;
 
-	float originX = transformable->getOrigin().x;
-	float originY = transformable->getOrigin().y;
-
-
 	if (x < canvasBound.getLeft()) x = canvasBound.getLeft();
 	else if (x > canvasBound.getRight()) x = canvasBound.getRight();
 
 	if (y < canvasBound.getTop()) y = canvasBound.getTop();
 	else if (y > canvasBound.getBot()) y = canvasBound.getBot();
 
-
 	xPos = x;
 	yPos = y;
 	transformable->setPosition(x, y);
 }
+
+Canvas* Draggable::getCanvas() { return canvas; }
+Bound Draggable::getClickableBound() { return clickableBound; }

@@ -8,6 +8,9 @@ class Resizer;
 
 class Platform : public Draggable {
 public:
+	const static int MIN_WIDTH = 10;
+	const static int MIN_HEIGHT = 10;
+
 	Platform(Canvas* c, int h);
 	~Platform();
 	virtual void draw(RenderWindow& window);

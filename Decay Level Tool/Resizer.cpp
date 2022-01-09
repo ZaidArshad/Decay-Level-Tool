@@ -24,6 +24,40 @@ Resizer::Resizer(Canvas* c, Platform* p, int t, float x, float y) {
 	rectangleShape.setPosition(xPos, yPos);
 }
 
+void Resizer::draggable(RenderWindow& window) {
+	Vector2i position = Mouse::getPosition(window);
+	isDrawableClicked(position);
+	if (isClicked) {
+		setPosition(Vector2f(position.x, position.y));
+	}
+}
+
+void Resizer::setPosition(Vector2f position) {
+	float x = position.x;
+	float y = position.y;
+
+	float originX = transformable->getOrigin().x;
+	float originY = transformable->getOrigin().y;
+
+
+	if (x < canvasBound.getLeft() - SIZE) x = canvasBound.getLeft();
+	else if (x > canvasBound.getRight() + SIZE) x = canvasBound.getRight();
+
+	if (y < canvasBound.getTop() - SIZE) y = canvasBound.getTop();
+	else if (y > canvasBound.getBot() + SIZE) y = canvasBound.getBot();
+
+	if (type == TOP_LEFT) {
+		if (x + (SIZE - originX) > parent->getClickableBound().getLeft())
+			x = parent->getClickableBound().getLeft() - (SIZE - originX);
+		if (y + (SIZE - originY) > parent->getClickableBound().getTop())
+			y = parent->getClickableBound().getTop() - (SIZE - originY);
+	}
+
+	xPos = x;
+	yPos = y;
+	transformable->setPosition(x, y);
+}
+
 void Resizer::setPos(float x, float y) {
 	Vector2f offset = rectangleShape.getOrigin();
 	isHeld = false;
@@ -32,8 +66,30 @@ void Resizer::setPos(float x, float y) {
 	setPosition(Vector2f(x, y));
 }
 
-void Resizer::resize(RenderWindow &window) {
+Vector2i constrainMousePosition(RenderWindow& window, Canvas* canvas) {
 	Vector2i mousePos = Mouse::getPosition(window);
+	int mouseX = mousePos.x;
+	int mouseY = mousePos.y;
+	Bound bound = canvas->getBound();
+
+	if (mouseX < bound.getLeft()) {
+		mouseX = bound.getLeft();
+	}
+	else if (bound.getRight() < mouseX) {
+		mouseX = bound.getRight();
+	}
+
+	if (mouseY < bound.getTop()) {
+		mouseY = bound.getTop();
+	}
+	else if (bound.getBot() < mouseY) {
+		mouseY = bound.getBot();
+	}
+	return Vector2i(mouseX, mouseY);
+}
+
+void Resizer::resize(RenderWindow &window) {
+	Vector2i mousePos = constrainMousePosition(window, parent->getCanvas());
 	int mouseX = mousePos.x;
 	int mouseY = mousePos.y;
 
@@ -46,15 +102,18 @@ void Resizer::resize(RenderWindow &window) {
 	Vector2f offset = rectangleShape.getOrigin();
 
 	// Left 
-	//platW = platW + (platX - mouseX - offset);
 	if (type == TOP_LEFT) {
 		parent->setOrigin(Vector2f(0, 0));
 		if (isHeld) {
 			platW = platW + (platX - (mouseX + SIZE - offset.x));
 			platH = platH + (platY - (mouseY + SIZE - offset.y));
 		}
-		platX = mouseX + (SIZE - offset.x);
-		platY = mouseY + (SIZE - offset.y);
+		if (platW > Platform::MIN_WIDTH) {
+			platX = mouseX + (SIZE - offset.x);
+		}
+		if (platH > Platform::MIN_HEIGHT) {
+			platY = mouseY + (SIZE - offset.y);
+		}
 		isHeld = true;
 	}
 	else if (type == TOP_RIGHT) {
@@ -63,13 +122,11 @@ void Resizer::resize(RenderWindow &window) {
 		// platY = mouseY + (SIZE - offset.y);
 	}
 
-
 	//cout << "X: " << mouseX << endl;
 	//cout << "W: " << platW << " H: " << platH << " X: " << platX << " Y: " << platY << endl;
-
+	parent->setPosition(Vector2f(platX, platY));
 	parent->setWidth(platW);
 	parent->setHeight(platH);
-	parent->setPosition(Vector2f(platX, platY));
 }
 
 bool Resizer::getClicked() { return isClicked; }

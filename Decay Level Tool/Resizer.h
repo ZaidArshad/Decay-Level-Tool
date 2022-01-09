@@ -17,6 +17,8 @@ public:
 	static const int BOT_RIGHT = 3;
 
 	Resizer(Canvas* c, Platform* p, int t, float x, float y);
+	void draggable(RenderWindow& window);
+	void setPosition(Vector2f position);
 	void setPos(float x, float y);
 	void resize(RenderWindow& window);
 	bool getClicked();
@@ -25,6 +27,7 @@ private:
 	int type;
 	Platform* parent;
 	RectangleShape rectangleShape;
+	bool min = false;
 	bool isHeld = false;
 	Color COLOR = Color(255, 0, 0);
 };
