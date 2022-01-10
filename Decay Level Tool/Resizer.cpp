@@ -33,7 +33,7 @@ void Resizer::draggable(RenderWindow& window) {
 	}
 }
 
-void Resizer::setPosition(Vector2f position) {
+void Resizer::setPosition(Vector2f position) { 
 	float x = position.x;
 	float y = position.y;
 
