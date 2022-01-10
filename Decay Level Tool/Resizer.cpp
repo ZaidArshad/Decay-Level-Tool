@@ -1,11 +1,12 @@
 #include "Resizer.h"
 
 
-Resizer::Resizer(Canvas* c, Platform* p, int t, float x, float y) {
-	type = t;
+Resizer::Resizer(Canvas* c, Platform* p, int yT, int xT, float x, float y) {
+	canvas = c;
 	self = p;
 	parent = p;
-	canvas = c;
+	yType = yT;
+	xType = xT;
 	width = SIZE;
 	height = SIZE;
 	rectangleShape.setSize(Vector2f(width, height));
@@ -46,11 +47,23 @@ void Resizer::setPosition(Vector2f position) {
 	if (y < canvasBound.getTop() - SIZE) y = canvasBound.getTop();
 	else if (y > canvasBound.getBot() + SIZE) y = canvasBound.getBot();
 
-	if (type == TOP_LEFT) {
-		if (x + (SIZE - originX) > parent->getClickableBound().getLeft())
-			x = parent->getClickableBound().getLeft() - (SIZE - originX);
+	if (yType == TOP) {
 		if (y + (SIZE - originY) > parent->getClickableBound().getTop())
 			y = parent->getClickableBound().getTop() - (SIZE - originY);
+	}
+	else if (yType == BOT) {
+		if (y - originY < parent->getClickableBound().getBot())
+			y = parent->getClickableBound().getBot() + originY;
+	}
+
+
+	if (xType == LEFT) {
+		if (x + (SIZE - originX) > parent->getClickableBound().getLeft())
+			x = parent->getClickableBound().getLeft() - (SIZE - originX);
+	}
+	else if (xType == RIGHT) {
+		if (x - originX < parent->getClickableBound().getRight())
+			x = parent->getClickableBound().getRight() + originX;
 	}
 
 	xPos = x;
@@ -93,7 +106,6 @@ void Resizer::resize(RenderWindow &window) {
 	int mouseX = mousePos.x;
 	int mouseY = mousePos.y;
 
-	Vector2f platOrigin = parent->getOrigin();
 	int platW = parent->getWidth();
 	int platH = parent->getHeight();
 	float platX = parent->getX();
@@ -101,25 +113,44 @@ void Resizer::resize(RenderWindow &window) {
 
 	Vector2f offset = rectangleShape.getOrigin();
 
-	// Left 
-	if (type == TOP_LEFT) {
-		parent->setOrigin(Vector2f(0, 0));
-		if (isHeld) {
-			platW = platW + (platX - (mouseX + SIZE - offset.x));
+	bool held = isHeld;
+
+	parent->setOrigin(Vector2f(0, 0));
+
+	if (yType == TOP) {
+		if (held) {
 			platH = platH + (platY - (mouseY + SIZE - offset.y));
-		}
-		if (platW > Platform::MIN_WIDTH) {
-			platX = mouseX + (SIZE - offset.x);
 		}
 		if (platH > Platform::MIN_HEIGHT) {
 			platY = mouseY + (SIZE - offset.y);
 		}
 		isHeld = true;
 	}
-	else if (type == TOP_RIGHT) {
-		// platW = (mouseX - offset.x) - platX;
-		// platX = mouseX - (offset.x);
-		// platY = mouseY + (SIZE - offset.y);
+	else if (yType == BOT) {
+		if (held) {
+			platH = mouseY - platY - offset.y;	
+		}
+		else {
+			platY = mouseY - offset.y - platH;
+		}
+		isHeld = true;
+	}
+	
+	if (xType == LEFT) {
+		if (held) platW = platW + (platX - (mouseX + SIZE - offset.x));
+		if (platW > Platform::MIN_WIDTH) {
+			platX = mouseX + (SIZE - offset.x);
+		}
+		isHeld = true;
+	}
+	else if (xType == RIGHT) {
+		if (held) {
+			platW = mouseX - platX - offset.x;
+		}
+		else {
+			platX = mouseX - offset.x - platW;
+		}
+		isHeld = true;
 	}
 
 	//cout << "X: " << mouseX << endl;

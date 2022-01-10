@@ -32,6 +32,7 @@ Platform::~Platform() {
 
 void Platform::draw(RenderWindow& window) {
 	draggable(window);
+	window.draw(*drawable);
 
 	if (isShowingResizers) {
 		updateResizers(window);
@@ -47,8 +48,6 @@ void Platform::draw(RenderWindow& window) {
 	else {
 		isShowingResizers = false;
 	}
-
-	window.draw(*drawable);
 }
 
 void Platform::setWidth(int w) {
@@ -132,13 +131,13 @@ void Platform::updateResizers(RenderWindow& window) {
 void Platform::generateResizers() {
 	float offset = Resizer::SIZE / 2;
 
-	Resizer* tl = new Resizer(canvas, this, Resizer::TOP_LEFT,
+	Resizer* tl = new Resizer(canvas, this, Resizer::TOP, Resizer::LEFT,
 		clickableBound.getLeft() - offset, clickableBound.getTop() - offset);
-	Resizer* tr = new Resizer(canvas, this, Resizer::TOP_RIGHT,
+	Resizer* tr = new Resizer(canvas, this, Resizer::TOP, Resizer::RIGHT,
 		clickableBound.getRight() + offset, clickableBound.getTop() - offset);
-	Resizer* bl = new Resizer(canvas, this, Resizer::BOT_LEFT,
+	Resizer* bl = new Resizer(canvas, this, Resizer::BOT, Resizer::LEFT,
 		clickableBound.getLeft() - offset, clickableBound.getBot() + offset);
-	Resizer* br = new Resizer(canvas, this, Resizer::BOT_RIGHT,
+	Resizer* br = new Resizer(canvas, this, Resizer::BOT, Resizer::RIGHT,
 		clickableBound.getRight() + offset, clickableBound.getBot() + offset);
 
 	resizers.push_back(tl);

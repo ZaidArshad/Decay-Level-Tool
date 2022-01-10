@@ -11,12 +11,12 @@ using namespace std;
 class Resizer : public Draggable {
 public:
 	static const int SIZE = 5;
-	static const int TOP_LEFT = 0;
-	static const int TOP_RIGHT = 1;
-	static const int BOT_LEFT = 2;
-	static const int BOT_RIGHT = 3;
+	static const int TOP = 0;
+	static const int BOT = 1;
+	static const int LEFT = 0;
+	static const int RIGHT = 1;
 
-	Resizer(Canvas* c, Platform* p, int t, float x, float y);
+	Resizer(Canvas* c, Platform* p, int yT, int xT, float x, float y);
 	void draggable(RenderWindow& window);
 	void setPosition(Vector2f position);
 	void setPos(float x, float y);
@@ -24,7 +24,8 @@ public:
 	bool getClicked();
 
 private:
-	int type;
+	int yType;
+	int xType;
 	Platform* parent;
 	RectangleShape rectangleShape;
 	bool min = false;
