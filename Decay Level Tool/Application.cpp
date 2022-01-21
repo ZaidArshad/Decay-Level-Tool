@@ -15,11 +15,21 @@ Application::Application() {
 		LEVEL_WIDTH+(2*LEVEL_MARGIN), LEVEL_MARGIN,
 		SIDE_BACKGROUND_COLOR);
 
-	button = new Button(
+	Button* addButton = new Button(
 		buttonsArea->getBound().getLeft() + BUTTON_SIZE / 2, buttonsArea->getCenterPosition().y,
-		"can.png", [](Application* self){
+		"add.png", [](Application* self){
 			self->addPlatform(new Platform(self->getLevelArea(), 4));
 		});
+
+	Button* removeButton = new Button(
+		buttonsArea->getBound().getLeft() + BUTTON_SIZE / 2 + BUTTON_SIZE,
+		buttonsArea->getCenterPosition().y,
+		"remove.png", [](Application* self) {
+			self->removePlatform((Platform*) self->getLevelArea()->getLastClicked());
+		});
+
+	buttons.push_back(addButton);
+	buttons.push_back(removeButton);
 
 	setGuideLines();
 }
@@ -46,6 +56,15 @@ void Application::draw(RenderWindow& window) {
 
 void Application::addPlatform(Platform* platform) {
 	platforms.push_back(platform);
+}
+
+void Application::removePlatform(Platform* platform) {
+	for (int i = 0; i < platforms.size(); i++) {
+		if (platform == platforms[i]) {
+			platforms.erase(platforms.begin() + i);
+			break;
+		}
+	}
 }
 
 void Application::setGuideLines() {
@@ -78,6 +97,8 @@ void Application::drawLevelArea(RenderWindow& window) {
 
 void Application::drawButtonsArea(RenderWindow& window) {
 	window.draw(buttonsArea->getBackground());
-	button->mouseInteract(window, this);
-	button->draw(window);
+	for (Button* button : buttons) {
+		button->mouseInteract(window, this);
+		button->draw(window);
+	}
 }

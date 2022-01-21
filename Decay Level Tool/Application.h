@@ -34,6 +34,7 @@ public:
 
 	void draw(RenderWindow& window);
 	void addPlatform(Platform* platforn);
+	void removePlatform(Platform* platforn);
 
 private:
 	RectangleShape background;
@@ -44,7 +45,7 @@ private:
 	vector<Platform*> platforms;
 
 	Canvas* buttonsArea;
-	Button* button;
+	vector<Button*> buttons;
 
 	void setGuideLines();
 	void drawLevelArea(RenderWindow& window);
