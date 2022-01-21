@@ -1,5 +1,7 @@
 #include "Application.h"
 
+void hello() { std::cout << "pp\n"; }
+
 Application::Application() {
 	background.setSize(Vector2f(WIDTH, HEIGHT));
 	background.setFillColor(BACKGROUND_COLOR);
@@ -15,7 +17,7 @@ Application::Application() {
 
 	button = new Button(
 		buttonsArea->getBound().getLeft() + BUTTON_SIZE / 2, buttonsArea->getCenterPosition().y,
-		"can.png");
+		"can.png", hello);
 
 	setGuideLines();
 }
@@ -29,7 +31,7 @@ Canvas* Application::getLevelArea() {
 	return levelArea;
 }
 
-void Application::draw(RenderWindow& window, vector<Platform*> platforms) {
+void Application::draw(RenderWindow& window) {
 	window.draw(background);
 	drawLevelArea(window);
 	drawButtonsArea(window);
@@ -38,6 +40,10 @@ void Application::draw(RenderWindow& window, vector<Platform*> platforms) {
 		platforms[i]->draggable(window);
 		platforms[platforms.size() - i - 1]->draw(window);
 	}
+}
+
+void Application::addPlatform(Platform* platform) {
+	platforms.push_back(platform);
 }
 
 void Application::setGuideLines() {

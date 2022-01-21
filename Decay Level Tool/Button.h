@@ -9,7 +9,7 @@ using namespace sf;
 class Button {
 public:
 	//------Constructors------//
-	Button(float x, float y, string fileName);
+	Button(float x, float y, string fileName, void(*onClick)());
 
 	// Draws the entire button the screen
 	void draw(RenderWindow& window);
@@ -22,6 +22,8 @@ private:
 	float yPos;
 	float width;
 	float height;
+	bool isClicked = false;
+	void (*onClickFunction)();
 
 	Texture buttonTexture;
 	Sprite buttonSprite;

@@ -12,11 +12,7 @@ int main() {
 		"DECAY Level Tool", sf::Style::Titlebar | sf::Style::Close);
 	Platform platform(application->getLevelArea(), 0);
 	PlayerStart playerStart(application->getLevelArea());
-
-	vector<Platform*> platforms;
-	platforms.push_back(&platform);
 	
-
 	Event event;
 	window.setFramerateLimit(60);
 
@@ -35,8 +31,7 @@ int main() {
 		if (Keyboard::isKeyPressed(Keyboard::Space)) {
 			if (!space) {
 				space = true;
-				Platform* platform2 = new Platform(application->getLevelArea(), 4);
-				platforms.push_back(platform2);
+				application->addPlatform(new Platform(application->getLevelArea(), 4));
 			}
 		}
 		else {
@@ -45,7 +40,7 @@ int main() {
 
 		window.clear();
 		playerStart.draggable(window);
-		application->draw(window, platforms);
+		application->draw(window);
 		playerStart.draw(window);
 		window.display();
 	}

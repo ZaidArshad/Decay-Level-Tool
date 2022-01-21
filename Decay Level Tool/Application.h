@@ -32,13 +32,16 @@ public:
 	~Application();
 	Canvas* getLevelArea();
 
-	void draw(RenderWindow& window, vector<Platform*> platforms);
+	void draw(RenderWindow& window);
+	void addPlatform(Platform* platforn);
 
 private:
 	RectangleShape background;
 
 	Canvas* levelArea;
 	vector<RectangleShape*> guideLines;
+
+	vector<Platform*> platforms;
 
 	Canvas* buttonsArea;
 	Button* button;

@@ -1,10 +1,11 @@
 #include "Button.h"
 
-Button::Button(float x, float y, string fileName) {
+Button::Button(float x, float y, string fileName, void(*onClick)()) {
 
 	// Position and size data
 	xPos = x;
 	yPos = y;
+	onClickFunction = onClick;
 	const int MARGIN = 10; //Space around text from button
 	const int BORDER_WIDTH = 10; //Border width
 
@@ -53,8 +54,16 @@ bool Button::mouseInteract(RenderWindow& window) {
 		inside.setFillColor(Color::White);
 
 		// If left mouse button is clicked
-		if (mouse.isButtonPressed(Mouse::Button::Left))
+		if (mouse.isButtonPressed(Mouse::Button::Left)) {
+			if (!isClicked) {
+				isClicked = true;
+				onClickFunction();
+			}
 			return true;
+		}
+		else {
+			isClicked = false;
+		}
 	}
 	else {
 		// Sets the button's color to the default
