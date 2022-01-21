@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(float x, float y, string fileName, void(*onClick)()) {
+Button::Button(float x, float y, string fileName, void(*onClick)(Application*)) {
 
 	// Position and size data
 	xPos = x;
@@ -44,7 +44,7 @@ void Button::draw(RenderWindow& window) {
 }
 
 // Allows the mouse to interact with the button (highlights and when clicked return true)
-bool Button::mouseInteract(RenderWindow& window) {
+bool Button::mouseInteract(RenderWindow& window, Application* application) {
 	// Gets current mouse attributes
 	Mouse mouse;
 
@@ -57,7 +57,7 @@ bool Button::mouseInteract(RenderWindow& window) {
 		if (mouse.isButtonPressed(Mouse::Button::Left)) {
 			if (!isClicked) {
 				isClicked = true;
-				onClickFunction();
+				onClickFunction(application);
 			}
 			return true;
 		}

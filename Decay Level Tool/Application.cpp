@@ -17,7 +17,9 @@ Application::Application() {
 
 	button = new Button(
 		buttonsArea->getBound().getLeft() + BUTTON_SIZE / 2, buttonsArea->getCenterPosition().y,
-		"can.png", hello);
+		"can.png", [](Application* self){
+			self->addPlatform(new Platform(self->getLevelArea(), 4));
+		});
 
 	setGuideLines();
 }
@@ -76,6 +78,6 @@ void Application::drawLevelArea(RenderWindow& window) {
 
 void Application::drawButtonsArea(RenderWindow& window) {
 	window.draw(buttonsArea->getBackground());
-	button->mouseInteract(window);
+	button->mouseInteract(window, this);
 	button->draw(window);
 }
