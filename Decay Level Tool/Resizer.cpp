@@ -112,10 +112,9 @@ void Resizer::resize(RenderWindow &window) {
 	float platY = parent->getY();
 
 	Vector2f offset = rectangleShape.getOrigin();
-
 	bool held = isHeld;
-
 	parent->setOrigin(Vector2f(0, 0));
+
 
 	if (yType == TOP) {
 		if (held) {
@@ -130,9 +129,6 @@ void Resizer::resize(RenderWindow &window) {
 		if (held) {
 			platH = mouseY - platY - offset.y;	
 		}
-		else {
-			platY = mouseY - offset.y - platH;
-		}
 		isHeld = true;
 	}
 	
@@ -146,9 +142,6 @@ void Resizer::resize(RenderWindow &window) {
 	else if (xType == RIGHT) {
 		if (held) {
 			platW = mouseX - platX - offset.x;
-		}
-		else {
-			platX = mouseX - offset.x - platW;
 		}
 		isHeld = true;
 	}

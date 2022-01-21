@@ -74,11 +74,11 @@ void Platform::setHeight(int h) {
 	rectangleShape.setSize(Vector2f(width, height));
 }
 
-int Platform::getWidth() { return width; }
-int Platform::getHeight() { return height; }
+int Platform::getWidth() { return rectangleShape.getSize().x; }
+int Platform::getHeight() { return rectangleShape.getSize().y; }
 
-float Platform::getX() { return rectangleShape.getPosition().x; }
-float Platform::getY() { return rectangleShape.getPosition().y; }
+float Platform::getX() { return rectangleShape.getPosition().x - rectangleShape.getOrigin().x; }
+float Platform::getY() { return rectangleShape.getPosition().y - rectangleShape.getOrigin().y; }
 
 void Platform::setOrigin(Vector2f origin) {
 	rectangleShape.setOrigin(origin);
