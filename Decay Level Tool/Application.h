@@ -10,7 +10,7 @@ using namespace std;
 
 class Application {
 public:
-	const static int WIDTH = 1400;
+	const static int WIDTH = 1360;
 	const static int HEIGHT = 820;
 	const static int MARGIN = 25;
 	const Color BACKGROUND_COLOR = Color(100, 100, 100);
@@ -26,7 +26,9 @@ public:
 	const Color SIDE_BACKGROUND_COLOR = Color(150, 150, 150);
 
 	const static int BUTTONS_HEIGHT = 100;
-	const static int BUTTON_SIZE = 100;
+	const static int BUTTON_SIZE = 70;
+	const static int HALF_BUTTON_SIZE = BUTTON_SIZE/2;
+	const static int BUTTON_MARGIN = 10;
 
 	Application();
 	~Application();
@@ -35,6 +37,8 @@ public:
 	void draw(RenderWindow& window);
 	void addPlatform(Platform* platforn);
 	void removePlatform(Platform* platforn);
+	void movePlatformForward(Platform* platform);
+	void movePlatformBack(Platform* platform);
 
 private:
 	RectangleShape background;
@@ -51,5 +55,6 @@ private:
 	void drawLevelArea(RenderWindow& window);
 
 	void drawButtonsArea(RenderWindow& window);
+	void generateButtons();
 };
 
