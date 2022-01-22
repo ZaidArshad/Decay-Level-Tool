@@ -28,9 +28,12 @@ void Application::draw(RenderWindow& window) {
 	drawLevelArea(window);
 	drawButtonsArea(window);
 
+	// Must set draw the platforms before enabling their clickablility
+	for (int i = platforms.size()-1; i >= 0; i--) {
+		platforms[i]->draw(window);
+	}
 	for (int i = 0; i < platforms.size(); i++) {
 		platforms[i]->draggable(window);
-		platforms[platforms.size() - i - 1]->draw(window);
 	}
 }
 
@@ -113,15 +116,14 @@ void Application::generateButtons() {
 		buttonsArea->getBound().getLeft() + HALF_BUTTON_SIZE + BUTTON_MARGIN,
 		buttonsArea->getCenterPosition().y,
 		"add.png", [](Application* self) {
-			self->addPlatform(new Platform(self->getLevelArea(), 4));
+			self->addPlatform(new Platform(self->getLevelArea(), self->platforms.size()));
 		});
 
 	Button* removeButton = new Button(
 		buttonsArea->getBound().getLeft() + 3*HALF_BUTTON_SIZE + 2*BUTTON_MARGIN,
 		buttonsArea->getCenterPosition().y,
 		"remove.png", [](Application* self) {
-			//self->removePlatform((Platform*) self->getLevelArea()->getLastClicked());
-			self->addPlatform(new Platform(self->getLevelArea(), 5));
+			self->removePlatform((Platform*) self->getLevelArea()->getLastClicked());
 		});
 
 	Button* moveUpButton = new Button(

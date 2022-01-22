@@ -30,6 +30,6 @@ private:
 	RectangleShape rectangleShape;
 	bool min = false;
 	bool isHeld = false;
-	Color COLOR = Color(255, 0, 0);
+	Color COLOR = Color::Cyan;
 };
 

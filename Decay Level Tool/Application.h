@@ -40,13 +40,14 @@ public:
 	void movePlatformForward(Platform* platform);
 	void movePlatformBack(Platform* platform);
 
+	vector<Platform*> platforms;
+
 private:
 	RectangleShape background;
 
 	Canvas* levelArea;
 	vector<RectangleShape*> guideLines;
 
-	vector<Platform*> platforms;
 
 	Canvas* buttonsArea;
 	vector<Button*> buttons;

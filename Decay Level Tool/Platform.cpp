@@ -31,9 +31,6 @@ Platform::~Platform() {
 }
 
 void Platform::draw(RenderWindow& window) {
-	draggable(window);
-	window.draw(*drawable);
-
 	if (isShowingResizers) {
 		updateResizers(window);
 		for (Resizer* resizer : resizers) {
@@ -41,6 +38,7 @@ void Platform::draw(RenderWindow& window) {
 			resizer->draw(window);
 		}
 	}
+	window.draw(*drawable);
 
 	if (canvas->getLastClicked() == this) {
 		setClicked(window);
@@ -76,6 +74,8 @@ void Platform::setHeight(int h) {
 
 int Platform::getWidth() { return rectangleShape.getSize().x; }
 int Platform::getHeight() { return rectangleShape.getSize().y; }
+
+int Platform::getHealth() { return health; }
 
 float Platform::getX() { return rectangleShape.getPosition().x - rectangleShape.getOrigin().x; }
 float Platform::getY() { return rectangleShape.getPosition().y - rectangleShape.getOrigin().y; }

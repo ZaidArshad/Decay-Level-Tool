@@ -19,6 +19,7 @@ public:
 	void setHeight(int h);
 	int getWidth();
 	int getHeight();
+	int getHealth();
 	float getX();
 	float getY();
 	void setOrigin(Vector2f origin);
