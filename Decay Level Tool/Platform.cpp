@@ -5,12 +5,11 @@
 Platform::Platform(Canvas* c, int h) {
 	self = this;
 	canvas = c;
-	health = h;
 	width = 100;
 	height = 20;
 	rectangleShape.setSize(Vector2f(width, height));
 	rectangleShape.setOrigin(width / 2, height / 2);
-	rectangleShape.setFillColor(HEALTH_INDEX[health]);
+	setHealth(h);
 
 	drawable = &rectangleShape;
 	transformable = &rectangleShape;
@@ -70,6 +69,11 @@ void Platform::setHeight(int h) {
 	}
 	height = h;
 	rectangleShape.setSize(Vector2f(width, height));
+}
+
+void Platform::setHealth(int h) {
+	health = h;
+	rectangleShape.setFillColor(HEALTH_INDEX[h]);
 }
 
 int Platform::getWidth() { return rectangleShape.getSize().x; }

@@ -48,10 +48,13 @@ void Draggable::isDrawableClicked(Vector2i position) {
 				isClicked = true;
 			}
 		}
-
 		// If something other than current draggable clicked
 		else {
-			if (canvas->getLastClicked() == self && clickedDraggable != self) {
+			if (canvas->getLastClicked() == self && clickedDraggable != self &&
+				(position.x > canvasBound.getLeft() &&
+				position.x < canvasBound.getRight() &&
+				position.y > canvasBound.getTop() &&
+				position.y < canvasBound.getBot())) {
 				canvas->setLastClicked(nullptr);
 			}
 		}

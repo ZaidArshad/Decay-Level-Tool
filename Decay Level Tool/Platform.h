@@ -17,6 +17,7 @@ public:
 
 	void setWidth(int w);
 	void setHeight(int h);
+	void setHealth(int h);
 	int getWidth();
 	int getHeight();
 	int getHealth();

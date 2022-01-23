@@ -18,13 +18,19 @@ public:
 	const Color BAR_COLOR = Color::White;
 
 	Slider(float x, float y, float bW, int values);
-	void drawSliderBar(RenderWindow& window);
+	void drawSliderBar(RenderWindow& window, Platform* platform);
 
 private:
 	RectangleShape bar;
 	RectangleShape marker;
-	int value;
+	Platform* platform;
+	int numOfValues;
+	float barWidth;
 
 	vector<RectangleShape*> guideLines;
+	bool isSnappedToGuide = false;
+	bool newPlat = true;
+
+	void snapToGuide();
 };
 

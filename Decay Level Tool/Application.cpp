@@ -125,7 +125,7 @@ void Application::generateButtons() {
 		buttonsArea->getBound().getLeft() + HALF_BUTTON_SIZE + BUTTON_MARGIN,
 		buttonsArea->getCenterPosition().y,
 		"add.png", [](Application* self) {
-			self->addPlatform(new Platform(self->getLevelArea(), self->platforms.size()));
+			self->addPlatform(new Platform(self->getLevelArea(), 0));
 		});
 
 	Button* removeButton = new Button(
@@ -133,6 +133,7 @@ void Application::generateButtons() {
 		buttonsArea->getCenterPosition().y,
 		"remove.png", [](Application* self) {
 			self->removePlatform((Platform*) self->getLevelArea()->getLastClicked());
+			self->getLevelArea()->setLastClicked(nullptr);
 		});
 
 	Button* moveUpButton = new Button(
@@ -158,6 +159,8 @@ void Application::generateButtons() {
 
 void Application::drawPropertiesArea(RenderWindow& window) {
 	window.draw(propArea->getBackground());
-	slider->drawSliderBar(window);
-	slider->draw(window);
+	if (levelArea->getLastClicked() != nullptr) {
+		slider->drawSliderBar(window, (Platform*)levelArea->getLastClicked());
+		slider->draw(window);
+	}
 }
