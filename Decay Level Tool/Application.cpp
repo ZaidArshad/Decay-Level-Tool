@@ -10,15 +10,9 @@ Application::Application() {
 		LEVEL_MARGIN, LEVEL_MARGIN,
 		LEVEL_BACKGROUND_COLOR);
 
-	propArea = new Canvas(
-		SIDE_WIDTH, PROP_HEIGHT,
-		LEVEL_WIDTH + (2 * LEVEL_MARGIN), 2*LEVEL_MARGIN  + BUTTON_AREA_HEIGHT,
-		SIDE_BACKGROUND_COLOR);
-
-	slider = new Slider(propArea->getBound().getLeft() + BUTTON_MARGIN, 
-		propArea->getBound().getTop() + BUTTON_MARGIN, SIDE_WIDTH - 2*BUTTON_MARGIN, 8);
 
 	generateButtons();
+	generateProperties();
 	setGuideLines();
 }
 
@@ -163,4 +157,15 @@ void Application::drawPropertiesArea(RenderWindow& window) {
 		slider->drawSliderBar(window, (Platform*)levelArea->getLastClicked());
 		slider->draw(window);
 	}
+}
+
+void Application::generateProperties() {
+	propArea = new Canvas(
+		SIDE_WIDTH, PROP_HEIGHT,
+		LEVEL_WIDTH + (2 * LEVEL_MARGIN), 2 * LEVEL_MARGIN + BUTTON_AREA_HEIGHT,
+		SIDE_BACKGROUND_COLOR);
+
+	slider = new Slider(propArea->getBound().getLeft() + BUTTON_MARGIN,
+		propArea->getBound().getTop() + BUTTON_MARGIN, SIDE_WIDTH - 2 * BUTTON_MARGIN,
+		"Health", 8);
 }

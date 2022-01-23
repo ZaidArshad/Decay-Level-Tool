@@ -1,14 +1,10 @@
 #include "Slider.h"
 #include <math.h>
 
-Slider::Slider(float x, float y, float bW, int values) {
+Slider::Slider(float x, float y, float bW, string title, int values) {
 	type = SLIDER;
 	self = this;
-	canvas = new Canvas(
-		bW, MARKER_HEIGHT, x, y, Color::Transparent);
-
-	values = values - 1;
-
+	numOfValues = values - 1;
 	width = MARKER_WIDTH;
 	height = MARKER_HEIGHT;
 	marker.setSize(Vector2f(width, height));
@@ -16,27 +12,20 @@ Slider::Slider(float x, float y, float bW, int values) {
 	drawable = &marker;
 	transformable = &marker;
 	xPos = x;
-	yPos = y;
+	yPos = y + TITLE_SIZE;
+	canvas = new Canvas(
+		bW, MARKER_HEIGHT, xPos, yPos, Color::Transparent);
 	isClicked = false;
 	canvasBound = canvas->getBound();
 	setClickableBound();
 	marker.setPosition(xPos, yPos);
-
 	barWidth = bW - MARKER_WIDTH;
-	bar.setSize(Vector2f(barWidth, BAR_HEIGHT));
-	bar.setOrigin(0, BAR_HEIGHT / 2);
-	bar.setFillColor(BAR_COLOR);
-	bar.setPosition(x+MARKER_WIDTH/2, y+height/2);
 
-	RectangleShape* guideLine;
-	for (int i = 0; i <= values; i++) {
-		guideLine = new RectangleShape();
-		guideLine->setFillColor(GUIDELINE_COLOR);
-		guideLine->setSize(Vector2f(MARKER_WIDTH, MARKER_HEIGHT));
-		guideLine->setPosition(x + i * (barWidth / values), y);
-		guideLines.push_back(guideLine);
-	}
-	numOfValues = values;
+	titlePrompt = new Prompt(canvas->getCenterPosition().x,
+		y + MARGIN, "bulkypix.ttf", TITLE_SIZE, title, BAR_COLOR);
+
+	generateBar();
+	generateGuideLines();
 }
 
 void Slider::drawSliderBar(RenderWindow& window, Platform* p) {
@@ -50,7 +39,11 @@ void Slider::drawSliderBar(RenderWindow& window, Platform* p) {
 	}
 	window.draw(canvas->getBackground());
 	window.draw(bar);
-	for (RectangleShape* guideLine : guideLines) window.draw(*guideLine);
+	window.draw(titlePrompt->getText());
+	for (int i = 0; i <= numOfValues; i++) {
+		window.draw(*guideLines[i]);
+		window.draw(titleValues[i]->getText());
+	}
 	draggable(window);
 	snapToGuide();
 }
@@ -76,5 +69,27 @@ void Slider::snapToGuide() {
 			xPos = guideLines[platform->getHealth()]->getPosition().x + MARKER_WIDTH / 2;
 			marker.setPosition(xPos, yPos);
 		}
+	}
+}
+
+void Slider::generateBar() {
+	bar.setSize(Vector2f(barWidth, BAR_HEIGHT));
+	bar.setOrigin(0, BAR_HEIGHT / 2);
+	bar.setFillColor(BAR_COLOR);
+	bar.setPosition(xPos + MARKER_WIDTH / 2, yPos + height / 2);
+}
+
+void Slider::generateGuideLines() {
+	RectangleShape* guideLine;
+	Prompt* titleValue;
+	for (int i = 0; i <= numOfValues; i++) {
+		guideLine = new RectangleShape();
+		guideLine->setFillColor(GUIDELINE_COLOR);
+		guideLine->setSize(Vector2f(MARKER_WIDTH, MARKER_HEIGHT));
+		guideLine->setPosition(xPos + i * (barWidth / numOfValues), yPos);
+		titleValue = new Prompt(xPos + i * (barWidth / numOfValues) + MARKER_WIDTH/2,
+			yPos + MARKER_HEIGHT + MARGIN,"bulkypix.ttf", VALUES_SIZE, to_string(i), BAR_COLOR);
+		titleValues.push_back(titleValue);
+		guideLines.push_back(guideLine);
 	}
 }

@@ -39,6 +39,7 @@ int main() {
 		}
 
 		window.clear();
+		
 		playerStart.draggable(window);
 		application->draw(window);
 		playerStart.draw(window);

@@ -31,6 +31,7 @@ public:
 	const static int BUTTON_MARGIN = 10;
 
 	const static int PROP_HEIGHT = HEIGHT - BUTTON_AREA_HEIGHT - 3*LEVEL_MARGIN;
+	const static int PROP_TITLE_SIZE = 50;
 
 	Application();
 	~Application();
@@ -63,5 +64,6 @@ private:
 	void generateButtons();
 
 	void drawPropertiesArea(RenderWindow& window);
+	void generateProperties();
 };
 
