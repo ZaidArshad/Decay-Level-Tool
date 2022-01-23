@@ -18,3 +18,8 @@ float Bound::getTop() { return top; }
 float Bound::getLeft() { return left; }
 float Bound::getRight() { return right; }
 float Bound::getBot() { return bot; }
+
+bool Bound::contains(Vector2i position) {
+	return (position.x > left && position.x < right &&
+		position.y > top && position.y < bot);
+}

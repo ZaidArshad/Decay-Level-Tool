@@ -2,6 +2,7 @@
 #include <math.h>
 
 Slider::Slider(float x, float y, float bW, int values) {
+	type = SLIDER;
 	self = this;
 	canvas = new Canvas(
 		bW, MARKER_HEIGHT, x, y, Color::Transparent);
@@ -45,6 +46,7 @@ void Slider::drawSliderBar(RenderWindow& window, Platform* p) {
 	else {
 		platform = p;
 		newPlat = true;
+		isClicked = false;
 	}
 	window.draw(canvas->getBackground());
 	window.draw(bar);

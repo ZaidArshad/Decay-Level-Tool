@@ -2,6 +2,7 @@
 
 
 Resizer::Resizer(Canvas* c, Platform* p, int yT, int xT, float x, float y) {
+	type = RESIZER;
 	canvas = c;
 	self = p;
 	parent = p;

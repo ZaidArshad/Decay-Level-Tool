@@ -29,32 +29,31 @@ void Draggable::isDrawableClicked(Vector2i position) {
 	Draggable* clickedDraggable = canvas->getClickedDraggable();
 	setClickableBound();
 
+	if (clickableBound.contains(position) && !pressed) isHovered = true;
+
 	if (pressed) {
-		if (position.x > clickableBound.getLeft() &&
-			position.x < clickableBound.getRight() &&
-			position.y > clickableBound.getTop() &&
-			position.y < clickableBound.getBot()) {
+		if (clickableBound.contains(position)) {
+			if (isHovered) {
+				if (clickedDraggable == nullptr) {
 
-			if (clickedDraggable == nullptr) {
-
-				// First click
-				if (!isClicked) {
-					transformable->setOrigin(
-						position.x - clickableBound.getLeft(),
-						position.y - clickableBound.getTop());
+					// First click
+					if (!isClicked) {
+						transformable->setOrigin(
+							position.x - clickableBound.getLeft(),
+							position.y - clickableBound.getTop());
+					}
+					clickedDraggable = self;
+					if (type != PLAYER) canvas->setLastClicked(self);
+					else canvas->setLastClicked(nullptr);
+					isClicked = true;
 				}
-				clickedDraggable = self;
-				canvas->setLastClicked(self);
-				isClicked = true;
 			}
 		}
 		// If something other than current draggable clicked
 		else {
+			isHovered = false;
 			if (canvas->getLastClicked() == self && clickedDraggable != self &&
-				(position.x > canvasBound.getLeft() &&
-				position.x < canvasBound.getRight() &&
-				position.y > canvasBound.getTop() &&
-				position.y < canvasBound.getBot())) {
+				canvasBound.contains(position)) {
 				canvas->setLastClicked(nullptr);
 			}
 		}
@@ -63,6 +62,7 @@ void Draggable::isDrawableClicked(Vector2i position) {
 		if (clickedDraggable == self) clickedDraggable = nullptr;
 		isClicked = false;
 	}
+
 	setCanvasBound();
 	canvas->setClickedDraggable(clickedDraggable);
 

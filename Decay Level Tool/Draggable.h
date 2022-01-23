@@ -8,6 +8,11 @@ using namespace std;
 
 class Draggable {
 public:
+	const static int PLAYER = 0;
+	const static int PLATFORM = 1;
+	const static int RESIZER = 2;
+	const static int SLIDER = 3;
+
 	void draw(RenderWindow& window);
 	void draggable(RenderWindow& window);
 	void setPosition(Vector2f position);
@@ -15,6 +20,7 @@ public:
 	Bound getClickableBound();
 
 protected:
+	int type;
 	Draggable* self;
 	Canvas* canvas;
 	Drawable* drawable;
@@ -24,6 +30,7 @@ protected:
 	float width;
 	float height;
 	bool isClicked;
+	bool isHovered;
 	Bound canvasBound;
 	Bound clickableBound;
 

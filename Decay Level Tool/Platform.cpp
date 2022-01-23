@@ -3,6 +3,7 @@
 #include <iostream>
 
 Platform::Platform(Canvas* c, int h) {
+	type = PLATFORM;
 	self = this;
 	canvas = c;
 	width = 100;
