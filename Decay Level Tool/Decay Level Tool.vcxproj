@@ -161,6 +161,7 @@
     <ClCompile Include="PlayerStart.cpp" />
     <ClCompile Include="Prompt.cpp" />
     <ClCompile Include="Resizer.cpp" />
+    <ClCompile Include="Slider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="PlayerStart.h" />
     <ClInclude Include="Prompt.h" />
     <ClInclude Include="Resizer.h" />
+    <ClInclude Include="Slider.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

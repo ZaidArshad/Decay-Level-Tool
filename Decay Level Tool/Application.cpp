@@ -10,6 +10,14 @@ Application::Application() {
 		LEVEL_MARGIN, LEVEL_MARGIN,
 		LEVEL_BACKGROUND_COLOR);
 
+	propArea = new Canvas(
+		SIDE_WIDTH, PROP_HEIGHT,
+		LEVEL_WIDTH + (2 * LEVEL_MARGIN), 2*LEVEL_MARGIN  + BUTTON_AREA_HEIGHT,
+		SIDE_BACKGROUND_COLOR);
+
+	slider = new Slider(propArea->getBound().getLeft() + BUTTON_MARGIN, 
+		propArea->getBound().getTop() + BUTTON_MARGIN, SIDE_WIDTH - 2*BUTTON_MARGIN, 8);
+
 	generateButtons();
 	setGuideLines();
 }
@@ -27,6 +35,7 @@ void Application::draw(RenderWindow& window) {
 	window.draw(background);
 	drawLevelArea(window);
 	drawButtonsArea(window);
+	drawPropertiesArea(window);
 
 	// Must set draw the platforms before enabling their clickablility
 	for (int i = platforms.size()-1; i >= 0; i--) {
@@ -108,7 +117,7 @@ void Application::drawButtonsArea(RenderWindow& window) {
 
 void Application::generateButtons() {
 	buttonsArea = new Canvas(
-		SIDE_WIDTH, BUTTONS_HEIGHT,
+		SIDE_WIDTH, BUTTON_AREA_HEIGHT,
 		LEVEL_WIDTH + (2 * LEVEL_MARGIN), LEVEL_MARGIN,
 		SIDE_BACKGROUND_COLOR);
 
@@ -145,4 +154,10 @@ void Application::generateButtons() {
 	buttons.push_back(removeButton);
 	buttons.push_back(moveUpButton);
 	buttons.push_back(moveBackButton);
+}
+
+void Application::drawPropertiesArea(RenderWindow& window) {
+	window.draw(propArea->getBackground());
+	slider->drawSliderBar(window);
+	slider->draw(window);
 }

@@ -4,6 +4,7 @@
 #include "Canvas.h"
 #include "Draggable.h"
 #include "Platform.h"
+#include "Slider.h"
 
 using namespace sf;
 using namespace std;
@@ -23,12 +24,13 @@ public:
 	const Color LEVEL_GUIDELINE_COLOR = Color(255, 255, 255, 100);
 
 	const static int SIDE_WIDTH = WIDTH - LEVEL_WIDTH - (3*LEVEL_MARGIN);
+	const static int BUTTON_AREA_HEIGHT = 100;
 	const Color SIDE_BACKGROUND_COLOR = Color(150, 150, 150);
-
-	const static int BUTTONS_HEIGHT = 100;
 	const static int BUTTON_SIZE = 70;
 	const static int HALF_BUTTON_SIZE = BUTTON_SIZE/2;
 	const static int BUTTON_MARGIN = 10;
+
+	const static int PROP_HEIGHT = HEIGHT - BUTTON_AREA_HEIGHT - 3*LEVEL_MARGIN;
 
 	Application();
 	~Application();
@@ -48,14 +50,18 @@ private:
 	Canvas* levelArea;
 	vector<RectangleShape*> guideLines;
 
-
 	Canvas* buttonsArea;
 	vector<Button*> buttons;
+
+	Canvas* propArea;
+	Slider* slider;
 
 	void setGuideLines();
 	void drawLevelArea(RenderWindow& window);
 
 	void drawButtonsArea(RenderWindow& window);
 	void generateButtons();
+
+	void drawPropertiesArea(RenderWindow& window);
 };
 

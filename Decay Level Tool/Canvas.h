@@ -20,7 +20,6 @@ public:
 	Color backgroundColor;
 
 	Canvas(int w, int h, float x, float y, Color bg);
-	Canvas(Canvas* c, int w, int h, float x, float y);
 
 	Vector2f getCenterPosition();
 	RectangleShape getBackground();
