@@ -25,6 +25,7 @@ private:
 	float width;
 	float height;
 	bool isClicked = false;
+	bool isHovered = false;
 	void (*onClickFunction)(Application*);
 
 	Texture buttonTexture;

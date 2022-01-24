@@ -55,18 +55,21 @@ bool Button::mouseInteract(RenderWindow& window, Application* application) {
 
 		// If left mouse button is clicked
 		if (mouse.isButtonPressed(Mouse::Button::Left)) {
-			if (!isClicked) {
+			if (!isClicked && isHovered) {
 				isClicked = true;
 				onClickFunction(application);
 			}
+
 			return true;
 		}
 		else {
+			isHovered = true;
 			isClicked = false;
 		}
 	}
 	else {
 		// Sets the button's color to the default
+		isHovered = false;
 		border.setFillColor(Color::White);
 		inside.setFillColor(Color::Black);
 		return false;

@@ -5,6 +5,7 @@
 #include "Draggable.h"
 #include "Platform.h"
 #include "Slider.h"
+#include "EditText.h"
 
 using namespace sf;
 using namespace std;
@@ -31,7 +32,8 @@ public:
 	const static int BUTTON_MARGIN = 10;
 
 	const static int PROP_HEIGHT = HEIGHT - BUTTON_AREA_HEIGHT - 3*LEVEL_MARGIN;
-	const static int PROP_TITLE_SIZE = 50;
+	const static int PROP_TITLE_SIZE = 40;
+	const Color PROP_TITLE_COLOR = Color::White;
 
 	Application();
 	~Application();
@@ -56,6 +58,7 @@ private:
 
 	Canvas* propArea;
 	Slider* slider;
+	vector<EditText*> editTexts;
 
 	void setGuideLines();
 	void drawLevelArea(RenderWindow& window);

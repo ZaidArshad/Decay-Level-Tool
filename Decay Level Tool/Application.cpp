@@ -154,8 +154,13 @@ void Application::generateButtons() {
 void Application::drawPropertiesArea(RenderWindow& window) {
 	window.draw(propArea->getBackground());
 	if (levelArea->getLastClicked() != nullptr) {
-		slider->drawSliderBar(window, (Platform*)levelArea->getLastClicked());
+		Platform* plat = (Platform*)levelArea->getLastClicked();
+		slider->drawSliderBar(window, plat);
 		slider->draw(window);
+		editTexts[0]->draw(window, plat->getClickableBound().getLeft() - LEVEL_MARGIN);
+		editTexts[1]->draw(window, plat->getClickableBound().getTop() - LEVEL_MARGIN);
+		editTexts[2]->draw(window, plat->getWidth());
+		editTexts[3]->draw(window, plat->getHeight());
 	}
 }
 
@@ -168,4 +173,25 @@ void Application::generateProperties() {
 	slider = new Slider(propArea->getBound().getLeft() + BUTTON_MARGIN,
 		propArea->getBound().getTop() + BUTTON_MARGIN, SIDE_WIDTH - 2 * BUTTON_MARGIN,
 		"Health", 8);
+
+	EditText* xEdit = new EditText(propArea->getCenterPosition().x,
+		slider->getCanvas()->getBound().getBot() + BUTTON_MARGIN + PROP_TITLE_SIZE,
+		SIDE_WIDTH - 2*BUTTON_MARGIN, "bulkypix.ttf", "X Position", PROP_TITLE_SIZE);
+
+	EditText* yEdit = new EditText(propArea->getCenterPosition().x,
+		xEdit->getBound().getBot() + PROP_TITLE_SIZE/2,
+		SIDE_WIDTH - 2 * BUTTON_MARGIN, "bulkypix.ttf", "Y Position", PROP_TITLE_SIZE);
+
+	EditText* wEdit = new EditText(propArea->getCenterPosition().x,
+		yEdit->getBound().getBot() + PROP_TITLE_SIZE / 2,
+		SIDE_WIDTH - 2 * BUTTON_MARGIN, "bulkypix.ttf", "Width", PROP_TITLE_SIZE);
+
+	EditText* hEdit = new EditText(propArea->getCenterPosition().x,
+		wEdit->getBound().getBot() + PROP_TITLE_SIZE / 2,
+		SIDE_WIDTH - 2 * BUTTON_MARGIN, "bulkypix.ttf", "Height", PROP_TITLE_SIZE);
+
+	editTexts.push_back(xEdit);
+	editTexts.push_back(yEdit);
+	editTexts.push_back(wEdit);
+	editTexts.push_back(hEdit);
 }
