@@ -31,5 +31,11 @@ private:
 	bool min = false;
 	bool isHeld = false;
 	Color COLOR = Color::Cyan;
+
+	// TEMP
+	RectangleShape rect;
+
+
+	Vector2i constrainMousePosition(RenderWindow& window, Canvas* canvas);
 };
 

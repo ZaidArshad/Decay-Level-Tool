@@ -30,6 +30,7 @@ void Draggable::isDrawableClicked(Vector2i position) {
 	setClickableBound();
 
 	if (clickableBound.contains(position) && !pressed) isHovered = true;
+	//cout << clickedDraggable << endl;
 
 	if (pressed) {
 		if (clickableBound.contains(position)) {
@@ -59,7 +60,9 @@ void Draggable::isDrawableClicked(Vector2i position) {
 		}
 	}
 	else {
-		if (clickedDraggable == self) clickedDraggable = nullptr;
+		if (clickedDraggable == self) {
+			clickedDraggable = nullptr;
+		}
 		isClicked = false;
 	}
 

@@ -11,7 +11,7 @@ int main() {
 	RenderWindow window(VideoMode(application->WIDTH, application->HEIGHT),
 		"DECAY Level Tool", sf::Style::Titlebar | sf::Style::Close);
 	Platform platform(application->getLevelArea(), 0);
-	PlayerStart playerStart(application->getLevelArea());
+	//PlayerStart playerStart(application->getLevelArea());
 	
 	Event event;
 	window.setFramerateLimit(60);
@@ -19,11 +19,8 @@ int main() {
 	bool space = false;
 
 	while (window.isOpen()) {
-
 		while (window.pollEvent(event)) {
-
 			if (event.type == Event::Closed) {
-
 				window.close();
 			}
 		}
@@ -40,9 +37,9 @@ int main() {
 
 		window.clear();
 		
-		playerStart.draggable(window);
+		//playerStart.draggable(window);
 		application->draw(window);
-		playerStart.draw(window);
+		//playerStart.draw(window);
 		window.display();
 	}
 

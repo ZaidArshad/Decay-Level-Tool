@@ -41,11 +41,10 @@ void Resizer::setPosition(Vector2f position) {
 	float originX = transformable->getOrigin().x;
 	float originY = transformable->getOrigin().y;
 
-
-	if (x < canvasBound.getLeft() - SIZE) x = canvasBound.getLeft();
+	if (x < canvasBound.getLeft() - SIZE) x = canvasBound.getLeft() - (SIZE - originX);
 	else if (x > canvasBound.getRight() + SIZE) x = canvasBound.getRight();
 
-	if (y < canvasBound.getTop() - SIZE) y = canvasBound.getTop();
+	if (y < canvasBound.getTop() - SIZE) y = canvasBound.getTop() - (SIZE - originY);
 	else if (y > canvasBound.getBot() + SIZE) y = canvasBound.getBot();
 
 	if (yType == TOP) {
@@ -56,7 +55,6 @@ void Resizer::setPosition(Vector2f position) {
 		if (y - originY < parent->getClickableBound().getBot())
 			y = parent->getClickableBound().getBot() + originY;
 	}
-
 
 	if (xType == LEFT) {
 		if (x + (SIZE - originX) > parent->getClickableBound().getLeft())
@@ -80,24 +78,26 @@ void Resizer::setPos(float x, float y) {
 	setPosition(Vector2f(x, y));
 }
 
-Vector2i constrainMousePosition(RenderWindow& window, Canvas* canvas) {
+Vector2i Resizer::constrainMousePosition(RenderWindow& window, Canvas* canvas) {
 	Vector2i mousePos = Mouse::getPosition(window);
 	int mouseX = mousePos.x;
 	int mouseY = mousePos.y;
+	float originX = transformable->getOrigin().x;
+	float originY = transformable->getOrigin().y;
 	Bound bound = canvas->getBound();
 
-	if (mouseX < bound.getLeft()) {
-		mouseX = bound.getLeft();
+	if (mouseX < bound.getLeft() - SIZE) {
+		mouseX = bound.getLeft() - SIZE + originX;
 	}
-	else if (bound.getRight() < mouseX) {
-		mouseX = bound.getRight();
+	else if (bound.getRight() + SIZE < mouseX) {
+		mouseX = bound.getRight() + originX;
 	}
 
-	if (mouseY < bound.getTop()) {
-		mouseY = bound.getTop();
+	if (mouseY < bound.getTop() - SIZE) {
+		mouseY = bound.getTop() - SIZE + originY;
 	}
-	else if (bound.getBot() < mouseY) {
-		mouseY = bound.getBot();
+	else if (bound.getBot() + SIZE < mouseY) {
+		mouseY = bound.getBot() + originY;
 	}
 	return Vector2i(mouseX, mouseY);
 }
@@ -113,38 +113,32 @@ void Resizer::resize(RenderWindow &window) {
 	float platY = parent->getY();
 
 	Vector2f offset = rectangleShape.getOrigin();
-	bool held = isHeld;
 	parent->setOrigin(Vector2f(0, 0));
 
+	/*rect.setPosition(platX, platY);
+	rect.setSize(Vector2f(10, 10));
+	rect.setOrigin(width / 2, height / 2);
+	rect.setFillColor(COLOR);
+	window.draw(rect);*/
 
 	if (yType == TOP) {
-		if (held) {
-			platH = platH + (platY - (mouseY + SIZE - offset.y));
-		}
+		platH = platH + (platY - (mouseY + SIZE - offset.y));
 		if (platH > Platform::MIN_HEIGHT) {
 			platY = mouseY + (SIZE - offset.y);
 		}
-		isHeld = true;
 	}
 	else if (yType == BOT) {
-		if (held) {
-			platH = mouseY - platY - offset.y;	
-		}
-		isHeld = true;
+		platH = mouseY - platY - offset.y;	
 	}
 	
 	if (xType == LEFT) {
-		if (held) platW = platW + (platX - (mouseX + SIZE - offset.x));
+		platW = platW + (platX - (mouseX + SIZE - offset.x));
 		if (platW > Platform::MIN_WIDTH) {
 			platX = mouseX + (SIZE - offset.x);
 		}
-		isHeld = true;
 	}
 	else if (xType == RIGHT) {
-		if (held) {
-			platW = mouseX - platX - offset.x;
-		}
-		isHeld = true;
+		platW = mouseX - platX - offset.x;
 	}
 
 	//cout << "X: " << mouseX << endl;
