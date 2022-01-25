@@ -154,7 +154,7 @@ void Application::generateButtons() {
 void Application::drawPropertiesArea(RenderWindow& window) {
 	window.draw(propArea->getBackground());
 	if (levelArea->getLastClicked() != nullptr) {
-		Platform* plat = (Platform*)levelArea->getLastClicked();
+		Platform* plat = (Platform*) levelArea->getLastClicked();
 		slider->drawSliderBar(window, plat);
 		slider->draw(window);
 		editTexts[0]->draw(window, plat->getClickableBound().getLeft() - LEVEL_MARGIN);
