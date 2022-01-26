@@ -8,10 +8,12 @@ class Application;
 using namespace std;
 using namespace sf;
 
+template <class T>
 class Button {
 public:
 	//------Constructors------//
-	Button(float x, float y, string fileName, void(*onClick)(Application*));
+	Button(float x, float y, string fileName, void(*onClick)(T*));
+	Button();
 
 	// Draws the entire button the screen
 	void draw(RenderWindow& window);
@@ -26,7 +28,7 @@ private:
 	float height;
 	bool isClicked = false;
 	bool isHovered = false;
-	void (*onClickFunction)(Application*);
+	void (*onClickFunction)(T*);
 
 	Texture buttonTexture;
 	Sprite buttonSprite;

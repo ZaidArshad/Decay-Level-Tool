@@ -8,22 +8,23 @@ Resizer::Resizer(Canvas* c, Platform* p, int yT, int xT, float x, float y) {
 	parent = p;
 	yType = yT;
 	xType = xT;
-	width = SIZE;
-	height = SIZE;
-	rectangleShape.setSize(Vector2f(width, height));
-	rectangleShape.setOrigin(width / 2, height/ 2);
+	alloc();
+	*width = SIZE;
+	*height = SIZE;
+	rectangleShape.setSize(Vector2f(*width, *height));
+	rectangleShape.setOrigin(*width / 2, *height/ 2);
 	rectangleShape.setFillColor(COLOR);
 
 	drawable = &rectangleShape;
 	transformable = &rectangleShape;
 
-	xPos = x;
-	yPos = y;
+	*xPos = x;
+	*yPos = y;
 	isClicked = false;
 	canvasBound = c->getBound();
 	setClickableBound();
 
-	rectangleShape.setPosition(xPos, yPos);
+	rectangleShape.setPosition(*xPos, *yPos);
 }
 
 void Resizer::draggable(RenderWindow& window) {
@@ -65,8 +66,8 @@ void Resizer::setPosition(Vector2f position) {
 			x = parent->getClickableBound().getRight() + originX;
 	}
 
-	xPos = x;
-	yPos = y;
+	*xPos = x;
+	*yPos = y;
 	transformable->setPosition(x, y);
 }
 

@@ -9,17 +9,18 @@ PlayerStart::PlayerStart(Canvas* c) {
 	type = PLAYER;
 	self = this;
 	canvas = c;
-	width = playerTexture.getSize().x;
-	height = playerTexture.getSize().y;
+	alloc();
+	*width = playerTexture.getSize().x;
+	*height = playerTexture.getSize().y;
 	playerSprite.setTexture(playerTexture);
-	playerSprite.setOrigin(width / 2, height / 2);
+	playerSprite.setOrigin(*width / 2, *height / 2);
 
 	drawable = &playerSprite;
 	transformable = &playerSprite;
 
 	Vector2f position = c->getCenterPosition();
-	xPos = position.x;
-	yPos = position.y;
+	*xPos = position.x;
+	*yPos = position.y;
 	isClicked = false;
 	canvasBound = c->getBound();
 	setClickableBound();

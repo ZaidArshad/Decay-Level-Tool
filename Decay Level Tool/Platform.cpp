@@ -6,23 +6,24 @@ Platform::Platform(Canvas* c, int h) {
 	type = PLATFORM;
 	self = this;
 	canvas = c;
-	width = 100;
-	height = 20;
-	rectangleShape.setSize(Vector2f(width, height));
-	rectangleShape.setOrigin(width / 2, height / 2);
+	alloc();
+	*width = 100;
+	*height = 20;
+	rectangleShape.setSize(Vector2f(*width, *height));
+	rectangleShape.setOrigin(*width / 2, *height / 2);
 	setHealth(h);
 
 	drawable = &rectangleShape;
 	transformable = &rectangleShape;
 
 	Vector2f position = c->getCenterPosition();
-	xPos = position.x;
-	yPos = position.y;
+	*xPos = position.x;
+	*yPos = position.y;
 	isClicked = false;
 	canvasBound = c->getBound();
 	setClickableBound();
 
-	rectangleShape.setPosition(xPos, yPos);
+	rectangleShape.setPosition(*xPos, *yPos);
 	generateResizers();
 }
 
@@ -49,27 +50,27 @@ void Platform::draw(RenderWindow& window) {
 }
 
 void Platform::setWidth(int w) {
-	float x = xPos - rectangleShape.getOrigin().x;
+	float x = *xPos - rectangleShape.getOrigin().x;
 	if (x + w > canvas->getBound().getRight()) {
 		w = canvas->getBound().getRight() - x;
 	}
 	else if (w < MIN_WIDTH) {
 		w = MIN_WIDTH;
 	}
-	width = w;
-	rectangleShape.setSize(Vector2f(width, height));
+	*width = w;
+	rectangleShape.setSize(Vector2f(*width, *height));
 }
 
 void Platform::setHeight(int h) {
-	float y = yPos - rectangleShape.getOrigin().y;
+	float y = *yPos - rectangleShape.getOrigin().y;
 	if (y + h > canvas->getBound().getBot()) {
 		h = canvas->getBound().getBot() - y;
 	}
 	else if (h < MIN_HEIGHT) {
 		h = MIN_HEIGHT;
 	}
-	height = h;
-	rectangleShape.setSize(Vector2f(width, height));
+	*height = h;
+	rectangleShape.setSize(Vector2f(*width, *height));
 }
 
 void Platform::setHealth(int h) {

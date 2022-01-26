@@ -6,20 +6,27 @@ void Draggable::draw(RenderWindow& window) {
 	window.draw(*drawable);
 }
 
+void Draggable::alloc() {
+	xPos = new float();
+	yPos = new float();
+	width = new float();
+	height = new float();
+}
+
 void Draggable::setCanvasBound() {
 	Bound b = canvas->getBound();
 	float top = b.getTop() + transformable->getOrigin().y;
 	float left = b.getLeft() + transformable->getOrigin().x;
-	float right = b.getRight() - width + transformable->getOrigin().x;
-	float bot = b.getBot() - height + transformable->getOrigin().y;
+	float right = b.getRight() - *width + transformable->getOrigin().x;
+	float bot = b.getBot() - *height + transformable->getOrigin().y;
 	canvasBound = Bound(top, left, right, bot);
 }
 
 void Draggable::setClickableBound() {
-	float top = yPos - transformable->getOrigin().y;
-	float left = xPos - transformable->getOrigin().x;
-	float right = xPos + width - transformable->getOrigin().x;
-	float bot = yPos + height - transformable->getOrigin().y;
+	float top = *yPos - transformable->getOrigin().y;
+	float left = *xPos - transformable->getOrigin().x;
+	float right = *xPos + *width - transformable->getOrigin().x;
+	float bot = *yPos + *height - transformable->getOrigin().y;
 	clickableBound = Bound(top, left, right, bot);
 }
 
@@ -89,8 +96,8 @@ void Draggable::setPosition(Vector2f position) {
 	if (y < canvasBound.getTop()) y = canvasBound.getTop();
 	else if (y > canvasBound.getBot()) y = canvasBound.getBot();
 
-	xPos = x;
-	yPos = y;
+	*xPos = x;
+	*yPos = y;
 	transformable->setPosition(x, y);
 }
 

@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Prompt.h"
 #include "Platform.h"
+#include "Button.h"
 
 using namespace sf;
 using namespace std;
@@ -23,11 +24,15 @@ private:
 	Bound bound;
 
 	RectangleShape test;
-
 	Prompt* title;
 	Prompt* edit;
+
+	Button<EditText>* plus;
+	Button<EditText>* minus;
 	RectangleShape editBackground;
-	Platform* platform = nullptr;
 	int value;
+
+	void add();
+	void subtract();
 };
 

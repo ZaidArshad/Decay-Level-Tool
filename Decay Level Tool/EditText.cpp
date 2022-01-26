@@ -14,10 +14,10 @@ EditText::EditText(float x, float y, float w, string font, string t, int fSize) 
 	editBackground.setSize(Vector2f(width / 2, fSize + MARGIN));
 	editBackground.setFillColor(BACKGROUND_COLOR);
 
-	test.setPosition(bound.getLeft() ,bound.getTop());
+	/*test.setPosition(bound.getLeft() ,bound.getTop());
 	test.setSize(Vector2f(bound.getRight() - bound.getLeft(),
 		bound.getBot() - bound.getTop()));
-	test.setFillColor(Color(255,255,255,100));
+	test.setFillColor(Color(255,255,255,100));*/
 }
 
 void EditText::draw(RenderWindow& window, int v) {
@@ -30,3 +30,11 @@ void EditText::draw(RenderWindow& window, int v) {
 }
 
 Bound EditText::getBound() { return bound; }
+
+void EditText::add() {
+	(value)++;
+}
+
+void EditText::subtract() {
+	(value)--;
+}

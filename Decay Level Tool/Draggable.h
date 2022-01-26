@@ -25,15 +25,16 @@ protected:
 	Canvas* canvas;
 	Drawable* drawable;
 	Transformable* transformable;
-	float xPos;
-	float yPos;
-	float width;
-	float height;
+	float* xPos;
+	float* yPos;
+	float* width;
+	float* height;
 	bool isClicked;
 	bool isHovered;
 	Bound canvasBound;
 	Bound clickableBound;
 
+	void alloc();
 	void setCanvasBound();
 	void setClickableBound();
 	void isDrawableClicked(Vector2i position);

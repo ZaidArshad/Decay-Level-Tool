@@ -54,7 +54,7 @@ private:
 	vector<RectangleShape*> guideLines;
 
 	Canvas* buttonsArea;
-	vector<Button*> buttons;
+	vector<Button<Application>*> buttons;
 
 	Canvas* propArea;
 	Slider* slider;

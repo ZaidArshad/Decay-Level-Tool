@@ -1,6 +1,7 @@
 #include "Button.h"
 
-Button::Button(float x, float y, string fileName, void(*onClick)(Application*)) {
+template <class T>
+Button<T>::Button(float x, float y, string fileName, void(*onClick)(T*)) {
 
 	// Position and size data
 	xPos = x;
@@ -37,14 +38,16 @@ Button::Button(float x, float y, string fileName, void(*onClick)(Application*)) 
 }
 
 // Draws the entire button the screen
-void Button::draw(RenderWindow& window) {
+template <class T>
+void Button<T>::draw(RenderWindow& window) {
 	window.draw(border);
 	window.draw(inside);
 	window.draw(buttonSprite);
 }
 
 // Allows the mouse to interact with the button (highlights and when clicked return true)
-bool Button::mouseInteract(RenderWindow& window, Application* application) {
+template <class T>
+bool Button<T>::mouseInteract(RenderWindow& window, Application* application) {
 	// Gets current mouse attributes
 	Mouse mouse;
 

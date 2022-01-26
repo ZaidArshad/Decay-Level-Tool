@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Button.cpp"
 
 void hello() { std::cout << "pp\n"; }
 
@@ -103,7 +104,7 @@ void Application::drawLevelArea(RenderWindow& window) {
 
 void Application::drawButtonsArea(RenderWindow& window) {
 	window.draw(buttonsArea->getBackground());
-	for (Button* button : buttons) {
+	for (Button<Application>* button : buttons) {
 		button->mouseInteract(window, this);
 		button->draw(window);
 	}
@@ -115,14 +116,14 @@ void Application::generateButtons() {
 		LEVEL_WIDTH + (2 * LEVEL_MARGIN), LEVEL_MARGIN,
 		SIDE_BACKGROUND_COLOR);
 
-	Button* addButton = new Button(
+	Button<Application>* addButton = new Button<Application>(
 		buttonsArea->getBound().getLeft() + HALF_BUTTON_SIZE + BUTTON_MARGIN,
 		buttonsArea->getCenterPosition().y,
 		"add.png", [](Application* self) {
 			self->addPlatform(new Platform(self->getLevelArea(), 0));
 		});
 
-	Button* removeButton = new Button(
+	Button<Application>* removeButton = new Button<Application>(
 		buttonsArea->getBound().getLeft() + 3*HALF_BUTTON_SIZE + 2*BUTTON_MARGIN,
 		buttonsArea->getCenterPosition().y,
 		"remove.png", [](Application* self) {
@@ -130,14 +131,14 @@ void Application::generateButtons() {
 			self->getLevelArea()->setLastClicked(nullptr);
 		});
 
-	Button* moveUpButton = new Button(
+	Button<Application>* moveUpButton = new Button<Application>(
 		buttonsArea->getBound().getLeft() + 5*HALF_BUTTON_SIZE + 3*BUTTON_MARGIN,
 		buttonsArea->getCenterPosition().y,
 		"move_up.png", [](Application* self) {
 			self->movePlatformForward((Platform*)self->getLevelArea()->getLastClicked());
 		});
 
-	Button* moveBackButton = new Button(
+	Button<Application>* moveBackButton = new Button<Application>(
 		buttonsArea->getBound().getLeft() + 7*HALF_BUTTON_SIZE + 4*BUTTON_MARGIN,
 		buttonsArea->getCenterPosition().y,
 		"move_down.png", [](Application* self) {
