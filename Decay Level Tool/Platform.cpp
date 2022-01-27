@@ -39,6 +39,7 @@ void Platform::draw(RenderWindow& window) {
 			resizer->draw(window);
 		}
 	}
+	update();
 	window.draw(*drawable);
 
 	if (canvas->getLastClicked() == this) {
@@ -47,6 +48,12 @@ void Platform::draw(RenderWindow& window) {
 	else {
 		isShowingResizers = false;
 	}
+}
+
+void Platform::update() {
+	setPosition(Vector2f(*xPos, *yPos));
+	setHeight(*height);
+	setWidth(*width);
 }
 
 void Platform::setWidth(int w) {
@@ -151,3 +158,8 @@ void Platform::generateResizers() {
 	resizers.push_back(bl);
 	resizers.push_back(br);
 }
+
+float* Platform::getWP() { return width; }
+float* Platform::getHP() { return height; }
+float* Platform::getXP() { return xPos; }
+float* Platform::getYP() { return yPos; }

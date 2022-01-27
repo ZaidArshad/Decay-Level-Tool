@@ -47,7 +47,7 @@ void Button<T>::draw(RenderWindow& window) {
 
 // Allows the mouse to interact with the button (highlights and when clicked return true)
 template <class T>
-bool Button<T>::mouseInteract(RenderWindow& window, Application* application) {
+bool Button<T>::mouseInteract(RenderWindow& window, T* temp) {
 	// Gets current mouse attributes
 	Mouse mouse;
 
@@ -60,7 +60,7 @@ bool Button<T>::mouseInteract(RenderWindow& window, Application* application) {
 		if (mouse.isButtonPressed(Mouse::Button::Left)) {
 			if (!isClicked && isHovered) {
 				isClicked = true;
-				onClickFunction(application);
+				onClickFunction(temp);
 			}
 
 			return true;

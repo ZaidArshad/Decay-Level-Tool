@@ -158,10 +158,10 @@ void Application::drawPropertiesArea(RenderWindow& window) {
 		Platform* plat = (Platform*) levelArea->getLastClicked();
 		slider->drawSliderBar(window, plat);
 		slider->draw(window);
-		editTexts[0]->draw(window, plat->getClickableBound().getLeft() - LEVEL_MARGIN);
-		editTexts[1]->draw(window, plat->getClickableBound().getTop() - LEVEL_MARGIN);
-		editTexts[2]->draw(window, plat->getWidth());
-		editTexts[3]->draw(window, plat->getHeight());
+		editTexts[0]->draw(window, plat->getXP(), plat->getClickableBound().getLeft() - LEVEL_MARGIN);
+		editTexts[1]->draw(window, plat->getYP(), plat->getClickableBound().getTop() - LEVEL_MARGIN);
+		editTexts[2]->draw(window, plat->getWP(), plat->getWidth());
+		editTexts[3]->draw(window, plat->getHP(), plat->getHeight());
 	}
 }
 
@@ -177,19 +177,23 @@ void Application::generateProperties() {
 
 	EditText* xEdit = new EditText(propArea->getCenterPosition().x,
 		slider->getCanvas()->getBound().getBot() + BUTTON_MARGIN + PROP_TITLE_SIZE,
-		SIDE_WIDTH - 2*BUTTON_MARGIN, "bulkypix.ttf", "X Position", PROP_TITLE_SIZE);
+		SIDE_WIDTH - 2*BUTTON_MARGIN, "bulkypix.ttf", "X Position", PROP_TITLE_SIZE,
+		0, LEVEL_WIDTH-MARGIN);
 
 	EditText* yEdit = new EditText(propArea->getCenterPosition().x,
 		xEdit->getBound().getBot() + PROP_TITLE_SIZE/2,
-		SIDE_WIDTH - 2 * BUTTON_MARGIN, "bulkypix.ttf", "Y Position", PROP_TITLE_SIZE);
+		SIDE_WIDTH - 2 * BUTTON_MARGIN, "bulkypix.ttf", "Y Position", PROP_TITLE_SIZE,
+		0, LEVEL_HEIGHT);
 
 	EditText* wEdit = new EditText(propArea->getCenterPosition().x,
 		yEdit->getBound().getBot() + PROP_TITLE_SIZE / 2,
-		SIDE_WIDTH - 2 * BUTTON_MARGIN, "bulkypix.ttf", "Width", PROP_TITLE_SIZE);
+		SIDE_WIDTH - 2 * BUTTON_MARGIN, "bulkypix.ttf", "Width", PROP_TITLE_SIZE,
+		0, LEVEL_WIDTH);
 
 	EditText* hEdit = new EditText(propArea->getCenterPosition().x,
 		wEdit->getBound().getBot() + PROP_TITLE_SIZE / 2,
-		SIDE_WIDTH - 2 * BUTTON_MARGIN, "bulkypix.ttf", "Height", PROP_TITLE_SIZE);
+		SIDE_WIDTH - 2 * BUTTON_MARGIN, "bulkypix.ttf", "Height", PROP_TITLE_SIZE,
+		0, LEVEL_HEIGHT);
 
 	editTexts.push_back(xEdit);
 	editTexts.push_back(yEdit);

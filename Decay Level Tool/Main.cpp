@@ -7,11 +7,13 @@
 using namespace sf;
 
 int main() {
-	Application* application = new Application();
-	RenderWindow window(VideoMode(application->WIDTH, application->HEIGHT),
-		"DECAY Level Tool", sf::Style::Titlebar | sf::Style::Close);
-	Platform platform(application->getLevelArea(), 0);
+	
+	RenderWindow window(VideoMode(Application::WIDTH, Application::HEIGHT),
+		"DECAY Level Tool", sf::Style::Titlebar | sf::Style::Close );
 	//PlayerStart playerStart(application->getLevelArea());
+
+	Application* application = new Application();
+	Platform platform(application->getLevelArea(), 0);
 	
 	Event event;
 	window.setFramerateLimit(60);
@@ -36,7 +38,6 @@ int main() {
 		}
 
 		window.clear();
-		
 		//playerStart.draggable(window);
 		application->draw(window);
 		//playerStart.draw(window);

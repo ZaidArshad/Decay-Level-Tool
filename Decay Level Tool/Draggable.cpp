@@ -37,8 +37,6 @@ void Draggable::isDrawableClicked(Vector2i position) {
 	setClickableBound();
 
 	if (clickableBound.contains(position) && !pressed) isHovered = true;
-
-	cout << canvas << " " << clickedDraggable << endl;
 	if (pressed) {
 		if (clickableBound.contains(position)) {
 			if (isHovered) {

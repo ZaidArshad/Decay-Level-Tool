@@ -23,3 +23,9 @@ bool Bound::contains(Vector2i position) {
 	return (position.x > left && position.x < right &&
 		position.y > top && position.y < bot);
 }
+
+Vector2f Bound::getCenter() {
+	float x = (right + left) / 2;
+	float y = (bot + top) / 2;
+	return Vector2f(x, y);
+}

@@ -11,6 +11,7 @@ public:
 	float getRight();
 	float getBot();
 	bool contains(Vector2i position);
+	Vector2f getCenter();
 
 private:
 	float top;

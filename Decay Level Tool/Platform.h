@@ -14,6 +14,7 @@ public:
 	Platform(Canvas* c, int h);
 	~Platform();
 	virtual void draw(RenderWindow& window);
+	void update();
 
 	void setWidth(int w);
 	void setHeight(int h);
@@ -23,6 +24,12 @@ public:
 	int getHealth();
 	float getX();
 	float getY();
+
+	float* getWP();
+	float* getHP();
+	float* getXP();
+	float* getYP();
+
 	void setOrigin(Vector2f origin);
 	Vector2f getOrigin();
 

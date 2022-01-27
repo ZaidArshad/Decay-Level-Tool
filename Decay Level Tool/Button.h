@@ -13,13 +13,12 @@ class Button {
 public:
 	//------Constructors------//
 	Button(float x, float y, string fileName, void(*onClick)(T*));
-	Button();
 
 	// Draws the entire button the screen
 	void draw(RenderWindow& window);
 
 	// Allows the mouse to interact with the button (highlights and when clicked return true)
-	bool mouseInteract(RenderWindow& window, Application* application);
+	bool mouseInteract(RenderWindow& window, T* temp);
 
 private:
 	float xPos;
