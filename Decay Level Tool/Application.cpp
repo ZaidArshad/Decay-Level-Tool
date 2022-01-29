@@ -74,7 +74,7 @@ void Application::movePlatformForward(Platform* platform) {
 			platforms.erase(platforms.begin() + i);
 			platforms.insert(platforms.begin(), platform);
 			break;
-		}
+		} 
 	}
 }
 
