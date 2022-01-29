@@ -1,11 +1,13 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include "Button.h"
 #include "Canvas.h"
 #include "Draggable.h"
 #include "Platform.h"
 #include "Slider.h"
 #include "EditText.h"
+#include "PlayerStart.h"
 
 using namespace sf;
 using namespace std;
@@ -35,38 +37,48 @@ public:
 	const static int PROP_TITLE_SIZE = 40;
 	const Color PROP_TITLE_COLOR = Color::White;
 
-	Application();
+	const char* EXPORT_FILE = "Generated_Level.txt";
+
+	Application(RenderWindow* window);
 	~Application();
 	Canvas* getLevelArea();
+	RenderWindow* getWindow();
 
-	void draw(RenderWindow& window);
+	void draw();
 	void addPlatform(Platform* platforn);
 	void removePlatform(Platform* platforn);
 	void movePlatformForward(Platform* platform);
 	void movePlatformBack(Platform* platform);
+	void exportLevel();
 
 	vector<Platform*> platforms;
 
 private:
+	RenderWindow* window;
 	RectangleShape background;
+
+	PlayerStart* playerStart;
 
 	Canvas* levelArea;
 	vector<RectangleShape*> guideLines;
 
 	Canvas* buttonsArea;
 	vector<Button<Application>*> buttons;
+	Button<Application>* exportBtn;
 
 	Canvas* propArea;
 	Slider* slider;
 	vector<EditText*> editTexts;
 
-	void setGuideLines();
-	void drawLevelArea(RenderWindow& window);
+	bool isExporting = false;
 
-	void drawButtonsArea(RenderWindow& window);
+	void setGuideLines();
+	void drawLevelArea();
+
+	void drawButtonsArea();
 	void generateButtons();
 
-	void drawPropertiesArea(RenderWindow& window);
+	void drawPropertiesArea();
 	void generateProperties();
 };
 

@@ -8,22 +8,20 @@ using namespace sf;
 
 int main() {
 	
-	RenderWindow window(VideoMode(Application::WIDTH, Application::HEIGHT),
+	RenderWindow* window = new RenderWindow(VideoMode(Application::WIDTH, Application::HEIGHT),
 		"DECAY Level Tool", sf::Style::Titlebar | sf::Style::Close );
-	//PlayerStart playerStart(application->getLevelArea());
-
-	Application* application = new Application();
+	Application* application = new Application(window);
 	Platform platform(application->getLevelArea(), 0);
 	
 	Event event;
-	window.setFramerateLimit(60);
+	window->setFramerateLimit(60);
 
 	bool space = false;
 
-	while (window.isOpen()) {
-		while (window.pollEvent(event)) {
+	while (window->isOpen()) {
+		while (window->pollEvent(event)) {
 			if (event.type == Event::Closed) {
-				window.close();
+				window->close();
 			}
 		}
 
@@ -37,11 +35,9 @@ int main() {
 			space = false;
 		}
 
-		window.clear();
-		//playerStart.draggable(window);
-		application->draw(window);
-		//playerStart.draw(window);
-		window.display();
+		window->clear();
+		application->draw();
+		window->display();
 	}
 
 	delete application;

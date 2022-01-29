@@ -3,7 +3,8 @@
 
 void hello() { std::cout << "pp\n"; }
 
-Application::Application() {
+Application::Application(RenderWindow* w) {
+	window = w;
 	background.setSize(Vector2f(WIDTH, HEIGHT));
 	background.setFillColor(BACKGROUND_COLOR);
 	levelArea = new Canvas(
@@ -11,9 +12,10 @@ Application::Application() {
 		LEVEL_MARGIN, LEVEL_MARGIN,
 		LEVEL_BACKGROUND_COLOR);
 
+	playerStart = new PlayerStart(levelArea);
 
-	generateButtons();
 	generateProperties();
+	generateButtons();
 	setGuideLines();
 }
 
@@ -26,19 +28,31 @@ Canvas* Application::getLevelArea() {
 	return levelArea;
 }
 
-void Application::draw(RenderWindow& window) {
-	window.draw(background);
-	drawLevelArea(window);
-	drawButtonsArea(window);
-	drawPropertiesArea(window);
+RenderWindow* Application::getWindow() { return window; }
+
+void Application::draw() {
+	if (isExporting) {
+		system(EXPORT_FILE);
+		isExporting = false;
+	}
+
+	window->draw(background);
+	playerStart->draggable(*window);
+	drawLevelArea();
+	drawPropertiesArea();
+	drawButtonsArea();
 
 	// Must set draw the platforms before enabling their clickablility
 	for (int i = platforms.size()-1; i >= 0; i--) {
-		platforms[i]->draw(window);
+		platforms[i]->draw(*window);
 	}
 	for (int i = 0; i < platforms.size(); i++) {
-		platforms[i]->draggable(window);
+		platforms[i]->draggable(*window);
 	}
+	playerStart->draw(*window);
+
+	exportBtn->mouseInteract(*window, this);
+	exportBtn->draw(*window);
 }
 
 void Application::addPlatform(Platform* platform) {
@@ -74,6 +88,32 @@ void Application::movePlatformBack(Platform* platform) {
 	}
 }
 
+void Application::exportLevel() {
+
+	RectangleShape notInFocus(Vector2f(WIDTH, HEIGHT));
+	notInFocus.setPosition(0 , 0);
+	notInFocus.setFillColor(Color(255,255,255,100));
+	window->draw(notInFocus);
+
+	Prompt fileOpen(levelArea->getCenterPosition().x, 
+		levelArea->getCenterPosition().y, "ka1.ttf", 100, "Exported", Color::Red);
+	window->draw(fileOpen.getText());
+
+	ofstream file(EXPORT_FILE);
+	file << playerStart->getClickableBound().getLeft() - LEVEL_MARGIN << " ";
+	file << playerStart->getClickableBound().getTop() - LEVEL_MARGIN << endl;
+
+	for (Platform* platform : platforms) {
+		file << platform->getHealth() << " " << platform->getWidth() << " " << platform->getHeight() <<
+			" " << platform->getClickableBound().getLeft() - LEVEL_MARGIN <<
+			" " << platform->getClickableBound().getTop() - LEVEL_MARGIN << endl;
+	}
+	file.close();
+
+	// Enables the prompt to actually show up
+	isExporting = true;
+}
+
 void Application::setGuideLines() {
 	int rows = LEVEL_HEIGHT / 10;
 	int cols = LEVEL_WIDTH / 10;
@@ -95,18 +135,18 @@ void Application::setGuideLines() {
 	}
 }
 
-void Application::drawLevelArea(RenderWindow& window) {
-	window.draw(levelArea->getBackground());
+void Application::drawLevelArea() {
+	window->draw(levelArea->getBackground());
 	for (RectangleShape* guideLine : guideLines) {
-		window.draw(*guideLine);
+		window->draw(*guideLine);
 	}
 }
 
-void Application::drawButtonsArea(RenderWindow& window) {
-	window.draw(buttonsArea->getBackground());
+void Application::drawButtonsArea() {
+	window->draw(buttonsArea->getBackground());
 	for (Button<Application>* button : buttons) {
-		button->mouseInteract(window, this);
-		button->draw(window);
+		button->mouseInteract(*window, this);
+		button->draw(*window);
 	}
 }
 
@@ -145,6 +185,11 @@ void Application::generateButtons() {
 			self->movePlatformBack((Platform*)self->getLevelArea()->getLastClicked());
 		});
 
+	exportBtn = new Button<Application>(propArea->getCenterPosition().x,
+		propArea->getBound().getBot() - BUTTON_SIZE,
+		"Export", "bulkypix.ttf", [](Application* self) {
+			self->exportLevel();
+		});
 
 	buttons.push_back(addButton);
 	buttons.push_back(removeButton);
@@ -152,16 +197,16 @@ void Application::generateButtons() {
 	buttons.push_back(moveBackButton);
 }
 
-void Application::drawPropertiesArea(RenderWindow& window) {
-	window.draw(propArea->getBackground());
+void Application::drawPropertiesArea() {
+	window->draw(propArea->getBackground());
 	if (levelArea->getLastClicked() != nullptr) {
 		Platform* plat = (Platform*) levelArea->getLastClicked();
-		slider->drawSliderBar(window, plat);
-		slider->draw(window);
-		editTexts[0]->draw(window, plat->getXP(), plat->getClickableBound().getLeft() - LEVEL_MARGIN);
-		editTexts[1]->draw(window, plat->getYP(), plat->getClickableBound().getTop() - LEVEL_MARGIN);
-		editTexts[2]->draw(window, plat->getWP(), plat->getWidth());
-		editTexts[3]->draw(window, plat->getHP(), plat->getHeight());
+		slider->drawSliderBar(*window, plat);
+		slider->draw(*window);
+		editTexts[0]->draw(*window, plat->getXP(), plat->getClickableBound().getLeft() - LEVEL_MARGIN);
+		editTexts[1]->draw(*window, plat->getYP(), plat->getClickableBound().getTop() - LEVEL_MARGIN);
+		editTexts[2]->draw(*window, plat->getWP(), plat->getWidth());
+		editTexts[3]->draw(*window, plat->getHP(), plat->getHeight());
 	}
 }
 
