@@ -18,6 +18,8 @@ public:
 	//------Constructors------//
 	Button(float x, float y, string fileName, void(*onClick)(T*));
 	Button(float x, float y, string title, string fontName, void(*onClick)(T*));
+	~Button();
+
 	// Draws the entire button the screen
 	void draw(RenderWindow& window);
 

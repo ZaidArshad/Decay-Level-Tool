@@ -14,6 +14,10 @@ Canvas::Canvas(int w, int h, float x, float y, Color bg) {
 	bound = Bound(yPos, xPos, width+xPos, height+yPos);
 }
 
+Canvas::~Canvas() {
+
+}
+
 Vector2f Canvas::getCenterPosition() {
 	float x = (width / 2) + xPos;
 	float y = (height / 2) + yPos;

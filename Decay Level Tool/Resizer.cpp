@@ -27,6 +27,13 @@ Resizer::Resizer(Canvas* c, Platform* p, int yT, int xT, float x, float y) {
 	rectangleShape.setPosition(*xPos, *yPos);
 }
 
+Resizer::~Resizer() {
+	delete xPos;
+	delete yPos;
+	delete width;
+	delete height;
+}
+
 void Resizer::draggable(RenderWindow& window) {
 	Vector2i position = Mouse::getPosition(window);
 	isDrawableClicked(position);

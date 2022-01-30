@@ -7,6 +7,7 @@ Application::Application(RenderWindow* w) {
 	window = w;
 	background.setSize(Vector2f(WIDTH, HEIGHT));
 	background.setFillColor(BACKGROUND_COLOR);
+	
 	levelArea = new Canvas(
 		LEVEL_WIDTH, LEVEL_HEIGHT,
 		LEVEL_MARGIN, LEVEL_MARGIN,
@@ -20,8 +21,18 @@ Application::Application(RenderWindow* w) {
 }
 
 Application::~Application() {
-	for (RectangleShape* line : guideLines) delete line;
+	delete playerStart;
 	delete levelArea;
+	guideLines.clear();
+	guideLines.shrink_to_fit();
+	delete buttonsArea;
+	buttons.clear();
+	buttons.shrink_to_fit();
+	delete exportBtn;
+	delete propArea;
+	delete slider;
+	editTexts.clear();
+	editTexts.shrink_to_fit();
 }
 
 Canvas* Application::getLevelArea() {
@@ -62,6 +73,7 @@ void Application::addPlatform(Platform* platform) {
 void Application::removePlatform(Platform* platform) {
 	for (int i = 0; i < platforms.size(); i++) {
 		if (platform == platforms[i]) {
+			delete platforms[i];
 			platforms.erase(platforms.begin() + i);
 			break;
 		}

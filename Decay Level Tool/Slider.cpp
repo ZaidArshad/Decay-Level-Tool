@@ -29,6 +29,14 @@ Slider::Slider(float x, float y, float bW, string title, int values) {
 	generateGuideLines();
 }
 
+Slider::~Slider() {
+	guideLines.clear();
+	guideLines.shrink_to_fit();
+	titleValues.clear();
+	titleValues.shrink_to_fit();
+	delete titlePrompt;
+}
+
 void Slider::drawSliderBar(RenderWindow& window, Platform* p) {
 	if (p == platform) {
 		newPlat = false;

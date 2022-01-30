@@ -28,10 +28,23 @@ Platform::Platform(Canvas* c, int h) {
 }
 
 Platform::~Platform() {
+	cout << "delete platform\n";
+	for (Resizer* resizer : resizers) delete resizer;
 	resizers.clear();
+	resizers.shrink_to_fit();
+	delete xPos;
+	delete yPos;
+	delete width;
+	delete height;
 }
 
 void Platform::draw(RenderWindow& window) {
+	if (canvas->getLastClicked() == this) {
+		setClicked(window);
+	}
+	else {
+		isShowingResizers = false;
+	}
 	if (isShowingResizers) {
 		updateResizers(window);
 		for (Resizer* resizer : resizers) {
@@ -41,13 +54,6 @@ void Platform::draw(RenderWindow& window) {
 	}
 	update();
 	window.draw(*drawable);
-
-	if (canvas->getLastClicked() == this) {
-		setClicked(window);
-	}
-	else {
-		isShowingResizers = false;
-	}
 }
 
 void Platform::update() {

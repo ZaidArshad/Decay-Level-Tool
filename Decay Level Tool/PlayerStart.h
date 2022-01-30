@@ -10,6 +10,7 @@ using namespace std;
 class PlayerStart : public Draggable {
 public:
 	PlayerStart(Canvas* c);
+	~PlayerStart();
 
 private:
 	Texture playerTexture;

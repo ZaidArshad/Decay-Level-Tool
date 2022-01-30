@@ -71,6 +71,11 @@ Button<T>::Button(float x, float y, string title, string fontName, void(*onClick
 }
 
 template <class T>
+Button<T>::~Button() {
+	
+}
+
+template <class T>
 void Button<T>::createShape() {
 	// Building border around button
 	border.setSize(sf::Vector2f(width + BORDER_WIDTH, height + BORDER_WIDTH));

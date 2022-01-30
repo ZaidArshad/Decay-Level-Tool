@@ -22,6 +22,8 @@ public:
 	const Color BAR_COLOR = Color::White;
 
 	Slider(float x, float y, float bW, string title, int values);
+	~Slider();
+
 	void drawSliderBar(RenderWindow& window, Platform* platform);
 
 private:

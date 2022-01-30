@@ -18,10 +18,6 @@ EditText::EditText(float x, float y, float w, string font,
 	editBackground.setSize(Vector2f(width / 2, fSize + MARGIN));
 	editBackground.setFillColor(BACKGROUND_COLOR);
 
-	/*test.setPosition(bound.getLeft() ,bound.getTop());
-	test.setSize(Vector2f(bound.getRight() - bound.getLeft(),
-		bound.getBot() - bound.getTop()));
-	test.setFillColor(Color(255,255,255,100));*/
 	plus = new Button<EditText>(
 		bound.getCenter().x + 4*MARGIN + BUTTON_SIZE/2,
 		bound.getCenter().y + BUTTON_SIZE / 2,
@@ -35,7 +31,13 @@ EditText::EditText(float x, float y, float w, string font,
 		"minus.png", [](EditText* self) {
 			self->subtract();
 		});
+}
 
+EditText::~EditText() {
+	delete title;
+	delete edit;
+	delete plus;
+	delete plus;
 }
 
 void EditText::draw(RenderWindow& window, float* v, int d) {
@@ -48,7 +50,6 @@ void EditText::draw(RenderWindow& window, float* v, int d) {
 	plus->mouseInteract(window, this);
 	minus->draw(window);
 	minus->mouseInteract(window, this);
-	//window.draw(test);
 }
 
 Bound EditText::getBound() { return bound; }

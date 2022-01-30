@@ -27,3 +27,10 @@ PlayerStart::PlayerStart(Canvas* c) {
 
 	playerSprite.setPosition(position.x, position.y);
 }
+
+PlayerStart::~PlayerStart() {
+	delete xPos;
+	delete yPos;
+	delete width;
+	delete height;
+}

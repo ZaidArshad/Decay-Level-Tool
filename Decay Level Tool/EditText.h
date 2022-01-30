@@ -11,6 +11,8 @@ class EditText {
 public:
 	EditText(float x, float y, float w, string font,
 		string t, int fSize, float mi, float ma);
+	~EditText();
+
 	void draw(RenderWindow &window, float *v, int d);
 	Bound getBound();
 	void add();

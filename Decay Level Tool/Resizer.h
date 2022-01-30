@@ -17,6 +17,8 @@ public:
 	static const int RIGHT = 1;
 
 	Resizer(Canvas* c, Platform* p, int yT, int xT, float x, float y);
+	~Resizer();
+
 	void draggable(RenderWindow& window);
 	void setPosition(Vector2f position);
 	void setPos(float x, float y);
