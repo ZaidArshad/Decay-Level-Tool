@@ -13,7 +13,7 @@ void Draggable::alloc() {
 	height = new float();
 }
 
-void Draggable::setCanvasBound() {
+void Draggable::updateCanvasBound() {
 	Bound b = canvas->getBound();
 	float top = b.getTop() + transformable->getOrigin().y;
 	float left = b.getLeft() + transformable->getOrigin().x;
@@ -22,7 +22,7 @@ void Draggable::setCanvasBound() {
 	canvasBound = Bound(top, left, right, bot);
 }
 
-void Draggable::setClickableBound() {
+void Draggable::updateClickableBound() {
 	float top = *yPos - transformable->getOrigin().y;
 	float left = *xPos - transformable->getOrigin().x;
 	float right = *xPos + *width - transformable->getOrigin().x;
@@ -34,7 +34,7 @@ void Draggable::setClickableBound() {
 void Draggable::isDrawableClicked(Vector2i position) {
 	bool pressed = Mouse::isButtonPressed(Mouse::Left);
 	Draggable* clickedDraggable = canvas->getClickedDraggable();
-	setClickableBound();
+	updateClickableBound();
 
 	if (clickableBound.contains(position) && !pressed) isHovered = true;
 	if (pressed) {
@@ -71,7 +71,7 @@ void Draggable::isDrawableClicked(Vector2i position) {
 		isClicked = false;
 	}
 
-	setCanvasBound();
+	updateCanvasBound();
 	canvas->setClickedDraggable(clickedDraggable);
 
 }

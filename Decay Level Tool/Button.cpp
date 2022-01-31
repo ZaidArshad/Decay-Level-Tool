@@ -38,14 +38,11 @@ Button<T>::Button(float x, float y, string fileName, void(*onClick)(T*)) {
 
 template <class T>
 Button<T>::Button(float x, float y, string title, string fontName, void(*onClick)(T*)) {
-
-	// Position and size data
 	xPos = x;
 	yPos = y;
 	onClickFunction = onClick;
 
 	// Loads font in scope
-	// If the font does not load
 	if (!font.loadFromFile("fonts/" + fontName)) std::cout << "did not load\n";
 
 	// Setting Attributes
@@ -103,7 +100,7 @@ void Button<T>::draw(RenderWindow& window) {
 
 // Allows the mouse to interact with the button (highlights and when clicked return true)
 template <class T>
-bool Button<T>::mouseInteract(RenderWindow& window, T* temp) {
+bool Button<T>::mouseInteract(RenderWindow& window, T* callingClass) {
 	// Gets current mouse attributes
 	Mouse mouse;
 
@@ -117,7 +114,7 @@ bool Button<T>::mouseInteract(RenderWindow& window, T* temp) {
 		if (mouse.isButtonPressed(Mouse::Button::Left)) {
 			if (!isClicked && isHovered) {
 				isClicked = true;
-				onClickFunction(temp);
+				onClickFunction(callingClass);
 			}
 
 			return true;

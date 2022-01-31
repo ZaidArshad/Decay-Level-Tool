@@ -18,7 +18,7 @@ Slider::Slider(float x, float y, float bW, string title, int values) {
 		bW, MARKER_HEIGHT, *xPos, *yPos, Color::Transparent);
 	isClicked = false;
 	canvasBound = canvas->getBound();
-	setClickableBound();
+	updateClickableBound();
 	marker.setPosition(*xPos, *yPos);
 	barWidth = bW - MARKER_WIDTH;
 

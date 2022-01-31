@@ -23,7 +23,7 @@ PlayerStart::PlayerStart(Canvas* c) {
 	*yPos = position.y;
 	isClicked = false;
 	canvasBound = c->getBound();
-	setClickableBound();
+	updateClickableBound();
 
 	playerSprite.setPosition(position.x, position.y);
 }

@@ -22,7 +22,7 @@ Resizer::Resizer(Canvas* c, Platform* p, int yT, int xT, float x, float y) {
 	*yPos = y;
 	isClicked = false;
 	canvasBound = c->getBound();
-	setClickableBound();
+	updateClickableBound();
 
 	rectangleShape.setPosition(*xPos, *yPos);
 }

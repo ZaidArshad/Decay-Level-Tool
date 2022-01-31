@@ -7,6 +7,8 @@
 using namespace sf;
 using namespace std;
 
+// Used to display properties of given attribute
+// Uses buttons to change the value by 1
 class EditText {
 public:
 	EditText(float x, float y, float w, string font,

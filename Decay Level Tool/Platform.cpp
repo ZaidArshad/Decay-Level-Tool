@@ -21,7 +21,7 @@ Platform::Platform(Canvas* c, int h) {
 	*yPos = position.y;
 	isClicked = false;
 	canvasBound = c->getBound();
-	setClickableBound();
+	updateClickableBound();
 
 	rectangleShape.setPosition(*xPos, *yPos);
 	generateResizers();
