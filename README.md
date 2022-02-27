@@ -1,6 +1,5 @@
 # Decay-Level-Tool
-
-## Project by Zaid Arshad. Developed from December 2021 to Present
+Project by Zaid Arshad. Developed from December 2021 to January 2022.
 
 ## Description
 The Decay Level Tool is a program that helps develop levels for the game “Decay”.
